@@ -1,0 +1,1060 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+```{r curve_plot}
+
+debug = FALSE
+# install.packages("jmv", repos = "https://cran.r-project.org")
+# install.packages("jmvconnect", repos = "https://cran.r-project.org")
+
+# install.packages("RMySQL", repos = "https://cran.r-project.org")
+# install.packages("RMariaDB", repos = "https://cran.r-project.org")
+
+# install.packages("ggplot2", repos = "https://cran.r-project.org")
+# install.packages("dplyr", repos = "https://cran.r-project.org")
+# install.packages("tidyr", repos = "https://cran.r-project.org")
+# install.packages("lubridate", repos = "https://cran.r-project.org")
+# install.packages("ggpubr", repos = "https://cran.r-project.org")
+
+
+# install.packages("english", repos = "https://cran.r-project.org")
+
+
+
+
+
+
+
+
+
+library(grid)
+
+library(png)
+
+
+library(english)
+source("C:\\xampp\\htdocs\\TacticalDataDrivenDecisionSystem\\r_library\\ch2.r")
+source("C:\\xampp\\htdocs\\TacticalDataDrivenDecisionSystem\\r_library\\ch3.r")
+source("C:\\xampp\\htdocs\\TacticalDataDrivenDecisionSystem\\r_library\\ch4.r")
+
+image_path <- "./forecasting-semantic-model-annually/"
+knitr::opts_chunk$set(fig.path = image_path)
+
+# Load required packages
+library(RMySQL)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(ggpubr)
+
+options(scipen = 999)
+
+
+# Convert all matrix text to float
+matrix_to_float <- function(mat) {
+  # Convert matrix to numeric vector and then back to matrix
+  numeric_data <- as.numeric(mat)
+  # Restore matrix dimensions
+  matrix(numeric_data, nrow = nrow(mat), ncol = ncol(mat), 
+         dimnames = dimnames(mat))
+}
+
+# Replace non-numeric values with NA or a default number (e.g., 0)
+matrix_to_float_safe <- function(mat) {
+  # Convert elements to numeric, suppress warnings
+  numeric_data <- suppressWarnings(as.numeric(mat))
+  # Restore matrix structure
+  matrix(numeric_data, nrow = nrow(mat), ncol = ncol(mat), 
+         dimnames = dimnames(mat))
+}
+
+
+
+
+
+get_conn <- function() {
+  # Database connection
+  con <- dbConnect(MySQL(),
+                  user = "pcc-sdr",         # Replace with your MySQL username
+                  password = "6zu_.Ldx2.zCNb_8",         # Replace with your MySQL password
+                  dbname = "pcc_forecast_db",
+                  host = "127.0.0.1")
+  return(con)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+con <- get_conn()
+  
+sql <- paste0("
+  SELECT FLOOR(MIN(`x`)) `Min_Year`, YEAR(CURRENT_TIMESTAMP) this_year FROM `temp_forecast_daily` ORDER BY x DESC;
+  ")
+year_range <- dbGetQuery(con, sql)
+print("Year Range")
+print(year_range)
+print(year_range$this_year)
+print(year_range$Min_Year)
+  
+this_year <- as.integer(year_range$this_year)
+starting_year <- as.integer(year_range$Min_Year)
+  
+
+# Disconnect from database
+dbDisconnect(con)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+################################################################ all period
+
+
+con <- get_conn()
+
+sql <- paste0("
+  SELECT
+    x, avg(y) y
+  FROM temp_forecast_daily 
+  WHERE 1=1
+  group by x
+  order by x asc 
+")
+
+print(sql)
+ticket_data <- dbGetQuery(con, sql)
+dbDisconnect(con)
+
+ticket_data
+A=matrix_data <- as.matrix(ticket_data)
+A <- matrix_to_float_safe(A)
+
+
+print('Check point 3')
+
+x_list <- A[, 1] # First column for x values
+y_list <- A[, 2] # Second column for y values
+
+x <- A[, 1] # First column for x values
+y <- A[, 2] # Second column for y values
+# print(A)
+# print(x)
+# print(y)
+max_y=max(y)
+
+print('Check point 4')
+
+M <- spline(A);M
+print('Check point 4.1')
+f <- function(year__) {
+  splinefunc(M,year__)
+}
+
+#f = lagrange(A)
+
+print('Check point 5')
+
+h = 0.0001
+fp  <- function(year_) {
+  (((f(year_ + h) - f(year_))/h)*(1/365))
+}
+fpp  <- function(year_) {
+  (((fp(year_ + h) - fp(year_))/h)*(1/365))
+}
+fppp  <- function(year_) {
+  (((fpp(year_ + h) - fpp(year_))/h)*(1/365))
+}
+
+fpppp  <- function(year_) {
+  (((fppp(year_ + h) - fppp(year_))/h)*(1/365))
+}
+
+
+print(f)
+
+title_ = paste0("All Interpolation")
+image_path_ <- paste0(image_path,title_,".png")
+png(image_path_)
+curve(
+  f,
+  from=starting_year,
+  to=this_year,
+  col = "black",
+  
+  xlab = "X-axis", 
+  ylab = "Y-axis", 
+  
+  ylim = c(0, max_y),
+  
+  main = title_
+)
+
+#points(x, y, col = "red", pch = 19, cex = 1.5)  # Add the point in red
+#text(x, y, labels = x, pos = 1, cex = 0.7)
+#text(x, y, labels = y, pos = 3, cex = 0.7)
+
+x_vals <- x
+y_vals <- fp(x)
+y_vals[is.na(y_vals)] <- 0
+fp_y_max = max(y_vals)
+fp_y_min = min(y_vals)
+
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+dev.off()
+grid.raster(readPNG(image_path_))
+
+title_ = paste0("All First Derivative")
+image_path_ <- paste0(image_path,title_,".png")
+png(image_path_)
+curve(
+  fp,
+  from=starting_year,
+  to=this_year,
+  col = "purple",
+  
+  xlab = "X-axis", 
+  ylab = "Y-axis", 
+  
+  ylim = c(fp_y_min, fp_y_max),
+  
+  main = title_,
+  add=FALSE
+)
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+dev.off()
+grid.raster(readPNG(image_path_))
+
+fpp_y = fpp(x)
+fpp_y[is.na(fpp_y)] <- 0
+fpp_y_max = max(fpp_y)
+fpp_y_min = min(fpp_y)
+
+print('Check point 9')
+
+title_ = paste0("All Second Derivative")
+image_path_ <- paste0(image_path,title_,".png")
+png(image_path_)
+curve(
+  fpp,
+  from=starting_year,
+  to=this_year,
+  col = "red",
+  
+  xlab = "X-axis", 
+  ylab = "Y-axis", 
+  
+  ylim = c(fpp_y_min, fpp_y_max),
+  
+  main = title_ ,
+  add=FALSE
+)
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+dev.off()
+grid.raster(readPNG(image_path_))
+
+title_ = paste0("All Third Derivative")
+image_path_ <- paste0(image_path,title_,".png")
+png(image_path_)
+curve(
+  fppp,
+  from=starting_year,
+  to=this_year,
+  col = "orange",
+  
+  xlab = "X-axis", 
+  ylab = "Y-axis", 
+  
+  ylim = c(fpp_y_min, fpp_y_max),
+  
+  main = title_ ,
+  add=FALSE
+)
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+dev.off()
+grid.raster(readPNG(image_path_))
+
+title_ = paste0("All Fourth Derivative")
+image_path_ <- paste0(image_path,title_,".png")
+png(image_path_)
+curve(
+  fpppp,
+  from=starting_year,
+  to=this_year,
+  col = "green",
+  
+  xlab = "X-axis", 
+  ylab = "Y-axis", 
+  
+  ylim = c(fpp_y_min, fpp_y_max),
+  
+  main = title_ ,
+  add=FALSE
+)
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+dev.off()
+grid.raster(readPNG(image_path_))
+
+
+
+
+interpolation_derivative <- function(name,from_,to_) {
+  title_ = paste0(name)
+  image_path_ <- paste0(image_path,title_,".png")
+  png(image_path_)
+  curve(
+    f,
+    from=from_,
+    to=to_,
+    col = "black",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    ylim = c(fp_y_min, max_y),
+    
+    main = title_
+  )
+  curve(
+    fp,
+    from=from_,
+    to=to_,
+    col = "purple",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    ylim = c(fp_y_min, fp_y_max),
+    
+    add=TRUE
+  )
+  curve(
+    fpp,
+    from=from_,
+    to=to_,
+    col = "red",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    ylim = c(fpp_y_min, fpp_y_max),
+    add=TRUE
+  )
+  curve(
+    fppp,
+    from=from_,
+    to=to_,
+    col = "orange",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    ylim = c(fpp_y_min, fpp_y_max),
+    add=TRUE
+  )
+  curve(
+    fpppp,
+    from=from_,
+    to=to_,
+    col = "green",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    ylim = c(fpp_y_min, fpp_y_max),
+    add=TRUE
+  )
+  dev.off()
+  grid.raster(readPNG(image_path_))
+}
+
+max_iteration = 13
+
+get_avg_curve <- function(diff_func,batch_list__) {
+  if (debug) {
+    print(diff_func)
+    print('diff_func:')
+    
+    print(batch_list__)
+    print('batch_list__:')
+  }
+  
+  random_list = batch_list__
+  if (length(random_list) > max_iteration) {
+    random_list = random_list[sample(length(random_list), max_iteration)]
+  }
+  avg_curve <- function(x) {
+    if (debug) {
+      print(x)
+      print('avg_curve:x')
+      print(random_list)
+      print('avg_curve:random_list')
+    }
+    
+    if (is.null(x)) {
+      print('x is null, average graph cannot be outputed')
+    }
+    if (is.null(random_list)) {
+      print('random_list is null, average graph cannot be outputed')
+    }
+    if (debug) {
+      print('avg_curve:start loop')
+    }
+    total = as.double(0)
+    for (item in random_list) {
+      
+      print('X:')
+      x__ <- item$from + x
+      # print(x__)
+      
+      print('Y:')
+      y__ <- diff_func(x__)
+      # print(y__)
+      
+      if (debug) {
+        print(x__)
+        print('avg_curve:x__')
+        
+        print(y__)
+        print('avg_curve:y__')
+        
+        print(diff_func)
+        print('avg_curve:diff_func')
+      }
+      if (sum(is.na(y__))>0) {
+        stop('Invalid graph')
+      }
+      
+      total <- as.double(
+        as.double(total) + as.double(y__)
+      )
+      
+      if (debug) {
+        print(total)
+        print('avg_curve:total 1')
+      }
+    }
+    if (debug) {
+      print(total)
+      print('avg_curve:total 2')
+    }
+    average_of_total = (total/length(random_list))
+    
+    if (debug) {
+      print(random_list)
+      print('avg_curve:random_list 2')
+    }
+    
+    # print('length(random_list):')
+    # print(length(random_list))
+    # print('total:')
+    # print(total)
+    # print('average of total:')
+    # print(average_of_total)
+    return(average_of_total)
+  }
+  return(avg_curve)
+}
+
+get_std_curve <- function(diff_func,batch_list__) {
+  random_list <- batch_list__
+  if (length(random_list) > max_iteration) {
+    random_list <- random_list[sample(length(random_list), max_iteration)]
+  }
+  std_curve <- function(x) {
+    if (debug) {
+      print(x)
+      print('std_curve:x')
+      print(random_list)
+      print('std_curve:random_list')
+    }
+    if (is.null(x)) {
+      print('x is null, average graph cannot be outputed')
+    }
+    if (is.null(random_list)) {
+      print('random_list is null, average graph cannot be outputed')
+    }
+    
+    
+    if (debug) {
+      print('std_curve:start loop')
+    }
+    total = as.double(0)
+    for (item in random_list) {
+      x__ <- item$from + x
+      y__ <- diff_func(x__)
+      
+      if (debug) {
+        print(x__)
+        print('std_curve:x__')
+        
+        print(y__)
+        print('std_curve:y__')
+        
+        print(diff_func)
+        print('std_curve:diff_func')
+      }
+      
+      
+      if (sum(is.na(y__))>0) {
+        stop('Invalid graph')
+      }
+      total <- as.double(
+        as.double(total) + as.double(y__)
+      )
+      
+      if (debug) {
+        print(total)
+        print('std_curve:total')
+      }
+    }
+    average_of_total = as.double(total/length(random_list))
+    
+    
+    total_variant = as.double(0)
+    for (item in random_list) {
+      x__ <- item$from + x
+      y__ <- diff_func(x__)
+      if (sum(is.na(y__))>0) {
+        stop('Invalid graph')
+      }
+      total_variant <- as.double(
+        as.double(total_variant) + (
+          as.double(y__)-average_of_total
+        )^2
+      )
+    }
+    std <- sqrt(total_variant/length(random_list))
+    # print('length(random_list):')
+    # print(length(random_list))
+    # print('total:')
+    # print(total)
+    # print('average of total:')
+    # print(average_of_total)
+    return(std)
+  }
+  return(std_curve)
+}
+
+batch_draw_avg <- function(batch_list__,title_) {
+  first_iteration = batch_list__[[1]]
+  from_ = 0
+  to_ = first_iteration$to - first_iteration$from
+  
+  # print('Average Graph (range from):')
+  # print(to_)
+  
+  fp_avg_curve = get_avg_curve(fp,batch_list__)
+  fp_std_curve = get_std_curve(fp,batch_list__)
+  
+    
+  fpp_avg_curve = get_avg_curve(fpp,batch_list__)
+  fpp_std_curve = get_std_curve(fpp,batch_list__)
+  
+  fppp_avg_curve = get_avg_curve(fppp,batch_list__)
+  fppp_std_curve = get_std_curve(fppp,batch_list__)
+  
+  fpppp_avg_curve = get_avg_curve(fpppp,batch_list__)
+  fpppp_std_curve = get_std_curve(fpppp,batch_list__)
+  
+  
+  
+  image_path_ <- paste0(image_path,"average",title_,".png")
+  png(image_path_)
+  curve(
+    fp_avg_curve,
+    from=from_,
+    to=to_,
+    col = "purple",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    ylim = c(fp_y_min, fp_y_max),
+    main = title_,
+    
+    add=FALSE
+  )
+  curve(
+    fpp_avg_curve,
+    from=from_,
+    to=to_,
+    col = "red",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    ylim = c(fpp_y_min, fpp_y_max),
+    add=TRUE
+  )
+  curve(
+    fppp_avg_curve,
+    from=from_,
+    to=to_,
+    col = "orange",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    ylim = c(fpp_y_min, fpp_y_max),
+    add=TRUE
+  )
+  curve(
+    fpppp_avg_curve,
+    from=from_,
+    to=to_,
+    col = "green",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    ylim = c(fpp_y_min, fpp_y_max),
+    add=TRUE
+  )
+  dev.off()
+  grid.raster(readPNG(image_path_))
+  
+  
+  
+  
+  
+  
+  image_path_ <- paste0(image_path,"standard diviation",title_,".png")
+  png(image_path_)
+  curve(
+    fp_std_curve,
+    from=from_,
+    to=to_,
+    col = "purple",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    ylim = c(fp_y_min, fp_y_max),
+    main = title_,
+    
+    add=FALSE
+  )
+  curve(
+    fpp_std_curve,
+    from=from_,
+    to=to_,
+    col = "red",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    ylim = c(fpp_y_min, fpp_y_max),
+    add=TRUE
+  )
+  curve(
+    fppp_std_curve,
+    from=from_,
+    to=to_,
+    col = "orange",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    ylim = c(fpp_y_min, fpp_y_max),
+    add=TRUE
+  )
+  curve(
+    fpppp_std_curve,
+    from=from_,
+    to=to_,
+    col = "green",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    ylim = c(fpp_y_min, fpp_y_max),
+    add=TRUE
+  )
+  dev.off()
+  grid.raster(readPNG(image_path_))
+  
+  
+  
+  forecasting_seed <- list(
+    title=title_,
+    avg = list(
+      fp_avg = fp_avg_curve,
+      fpp_avg = fpp_avg_curve,
+      fppp_avg = fppp_avg_curve,
+      fpppp_avg = fpppp_avg_curve
+    ),
+    std = list(
+      fp_std = fp_std_curve,
+      fpp_std = fpp_std_curve,
+      fppp_std = fppp_std_curve,
+      fpppp_std = fpppp_std_curve
+    ),
+    from=from_,
+    to=to_
+  )
+  # print('forecasting seed:')
+  # print(forecasting_seed)
+  return(forecasting_seed)
+  
+}
+
+batch_draw <- function(batch_list__) {
+  for (item in batch_list__) {
+    interpolation_derivative(
+      item$title
+      ,from=item$from
+      ,to=item$to
+    )
+  }
+  
+  
+}
+
+
+batch_list <- list()
+for (i in starting_year:(this_year-1)) {
+  # For COVID
+  if (i == 2020 || i==2021) {
+    next
+  }
+  assoc_array <- list(
+    title = paste0("annually ",i)
+    ,from=i
+    ,to=(i+1)
+  )
+  batch_list <- append(batch_list, list(assoc_array))
+}
+annually_forecasting_seed = batch_draw_avg(batch_list, "annually")
+annually_batch_list <- batch_list
+# batch_draw(batch_list)
+
+
+
+
+
+batch_list <- list()
+con <- get_conn()
+sql <- paste0("CALL `select_months`(",starting_year,", ",this_year,");")
+print(sql)
+monthly_range <- dbGetQuery(con, sql)
+dbDisconnect(con)
+for (i in 1:nrow(monthly_range)) {
+  row <- monthly_range[i, ]
+  assoc_array <- list(
+    title = paste0("monthly ",row[['year']],' ',row[['month']])
+    ,from=row[['from_date_normalized']]
+    ,to=row[['to_date_normalized']]
+  )
+  batch_list <- append(batch_list, list(assoc_array))
+}
+# print(batch_list)
+monthly_forecasting_seed = batch_draw_avg(batch_list, "monthly")
+monthly_batch_list <- batch_list
+# batch_draw(batch_list)
+
+
+
+
+batch_list <- list()
+con <- get_conn()
+sql <- paste0("CALL `select_weeks`(",starting_year,", ",this_year,");")
+print(sql)
+weekly_range <- dbGetQuery(con, sql)
+dbDisconnect(con)
+for (i in 1:nrow(weekly_range)) {
+  row <- weekly_range[i, ]
+  assoc_array <- list(
+    title = paste0("weekly ",row[['begin']],' to ',row[['end']])
+    ,from=row[['min_x']]
+    ,to=row[['max_x']]
+  )
+  batch_list <- append(batch_list, list(assoc_array))
+}
+weekly_forecasting_seed = batch_draw_avg(batch_list, "weekly")
+weekly_batch_list <- batch_list
+# batch_draw(batch_list)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+RichardsonExtrapolation_Annually_SpeedBased <- function (begin_x, begin_relative_x, begin_y, begin_speed, include_linear_regression) {
+
+#  function (denormalized, begin_speed, include_linear_regression) {
+  
+  
+  # h <- as.double(0.001)
+  year <- begin_x - begin_relative_x
+  
+  start_value <- begin_y
+  start_speed <- begin_speed
+  
+  current_x <- begin_x
+  current_y <- begin_y
+  
+  X <- c(current_x+0)
+  Y <- c(current_y+0)
+  varian_list <- c(current_y+0)
+  
+  for (i in seq( begin_relative_x , 1, by=h)) {
+    
+    current_speed <- draw_average_annual_speed_curve(i)
+    current_speed <- as.double(current_speed)
+    
+    current_x <- current_x+h
+    variation <- as.double(current_speed*h)
+    
+    if (include_linear_regression) {
+      variation <- variation + as.double(slope*h)
+    }
+    
+    current_y <- current_y+variation
+    
+    mean_value <- mean(varian_list)
+    sd_value <- sd(varian_list)
+    
+    mean_value <- as.double(mean_value)
+    sd_value <- as.double(sd_value)
+    
+    diviation_subtract <- (1/( 1+(((variation-mean_value)/mean_value)) ))
+    diviation_subtract <- as.double(diviation_subtract)
+    variation_changed <- as.double(variation*diviation_subtract)
+    
+    X <- c(X,current_x+0)
+    Y <- c(Y,current_y+0)
+    varian_list <- c(varian_list,variation+0)
+  }
+
+  Sys.sleep(2)
+
+  title_ = paste0("Forecasting in ",year)
+  if (include_linear_regression) {
+    title_ <- paste0(title_, " linear regression")
+  }
+  image_path_ <- paste0(image_path,title_,".png")
+  png(image_path_)
+  # Plotting the graph
+  plot(
+    X, Y, 
+    type="o", 
+    col="blue", 
+    xlab="X-axis", 
+    ylab="Y-axis", 
+    main=title_, 
+    axes=TRUE, 
+    xlim=c(begin_x, current_x)
+  )
+  
+  dev.off()
+  grid.raster(readPNG(image_path_))
+  
+  print(paste0(" begin_x : ",begin_x))
+  print(paste0(" year : ",year))
+  print(paste0(" Relative : ",begin_relative_x))
+  
+  A=cbind(X,Y)
+  M <- spline(A);M
+  f <- function(year__) {
+    splinefunc(M,year__)
+  }
+  
+  return(f)
+}
+
+
+```
+
+```{r}
+
+debug = FALSE
+
+#dbDisconnect(con)
+
+con <- get_conn()
+
+iterate_forcast <- function(step) {
+  changing_differentiate <- format(h*step, scientific = FALSE)
+  
+  
+  sql <- paste0("CALL `denormalize`(to_normalized_date(CURRENT_TIMESTAMP)+",changing_differentiate,");")
+  print(sql)
+  
+  res  <- dbSendQuery(con, sql)
+  denormalized <- dbFetch(res)
+  dbClearResult(res)
+  while (dbMoreResults(con)) {
+    res <- dbNextResult(con)
+    dbClearResult(res)
+  }
+  dbClearResult(res)
+  
+
+  if (debug) {
+    print(denormalized)
+    print('denormalized:')
+  }
+  #print(denormalized$x)
+  #print(denormalized$annual_normalized)
+  #print(denormalized$normalize_of_week)
+  #print(denormalized$normalize_of_month)
+  
+  margin_of_variation <- function(normalize_x,forecasting_seed) {
+    if (debug) {
+      print(normalize_x)
+      print('normalize_x:')
+      print(forecasting_seed$avg$fp_avg)
+    }
+    avg_marigin = forecasting_seed$avg$fp_avg(normalize_x)
+    std_marigin = forecasting_seed$std$fp_std(normalize_x)
+    margins = list(
+      avg=avg_marigin,
+      std=std_marigin
+    );
+    return(margins);
+  }
+  if (debug) {
+    print(margin_of_variation)
+  }
+  
+  
+  annually_marigin <- margin_of_variation(denormalized$annual_normalized, annually_forecasting_seed);
+  monthly_marigin <- margin_of_variation(denormalized$normalize_of_month, monthly_forecasting_seed);
+  weekly_marigin <- margin_of_variation(denormalized$normalize_of_week, weekly_forecasting_seed);
+  
+  
+  annual_std=(1/annually_marigin$std)
+  month_std=(1/monthly_marigin$std)
+  week_std=(1/weekly_marigin$std)
+  
+  sum_std=(annual_std+month_std+week_std)
+  
+  annual_multiply=(annual_std/sum_std)
+  month_multiply=(month_std/sum_std)
+  week_multiply=(week_std/sum_std)
+  
+  annual_variation = annually_marigin$avg * annual_multiply
+  month_variation = monthly_marigin$avg * month_multiply
+  week_variation = weekly_marigin$avg * week_multiply
+  
+  sum_variation = (annual_variation+month_variation+week_variation)
+  
+  if (debug) {
+    print(annually_marigin)
+    print(monthly_marigin)
+    print(weekly_marigin)
+    
+    print('Multiply')
+    print(annual_multiply)
+    print(month_multiply)
+    print(week_multiply)
+    
+    
+    print('Variation distribution')
+    print(annual_variation)
+    print(month_variation)
+    print(week_variation)
+    
+    print('Sum of variation')
+    print(sum_variation)
+  }
+  return(list(annual_normalized=denormalized$x,variation=sum_variation))
+}
+
+sql <- paste0("CALL `denormalize`( to_normalized_date( CURRENT_TIMESTAMP ) );")
+print(sql)
+res  <- dbSendQuery(con, sql)
+denormalized <- dbFetch(res)
+dbClearResult(res)
+while (dbMoreResults(con)) {
+  res <- dbNextResult(con)
+  dbClearResult(res)
+}
+dbClearResult(res)
+
+x___=denormalized$x
+y___=f(x___)
+
+
+forecasting_points <- list()
+loop_iteration=1/h
+for (i in 1:loop_iteration) {
+  
+  
+    
+  result <- tryCatch({
+    forecasted=iterate_forcast(i)
+    y___=(y___+forecasted$variation)
+    forecasting_points[[i]] <- c(
+      forecasted$annual_normalized, 
+      y___
+    )
+  }
+  #, warning = function(w) { message("Warning: ", w); }
+  , error = function(e) {message("Error: ", e);}
+  #, finally = {message("Finished trying to evaluate expression.");}
+  ); print(result)
+
+
+
+
+}
+
+# Convert list to a data frame for plotting
+df <- do.call(rbind, points)
+colnames(df) <- c("year", "number")
+
+# Plot the points
+plot(df[, "x"], df[, "y"], type = "b", col = "blue", pch = 19,
+  xlab = "X", ylab = "Y", main = "Plot of (x, y) Points")
+
+
+dbDisconnect(con)
+
+```
+
+

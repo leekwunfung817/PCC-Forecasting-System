@@ -1,0 +1,667 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={R Notebook},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{R Notebook}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(english)}
+\FunctionTok{source}\NormalTok{(}\StringTok{"C:}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{xampp}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{htdocs}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{TacticalDataDrivenDecisionSystem}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{r\_library}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{ch2.r"}\NormalTok{)}
+\FunctionTok{source}\NormalTok{(}\StringTok{"C:}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{xampp}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{htdocs}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{TacticalDataDrivenDecisionSystem}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{r\_library}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{ch3.r"}\NormalTok{)}
+\FunctionTok{source}\NormalTok{(}\StringTok{"C:}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{xampp}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{htdocs}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{TacticalDataDrivenDecisionSystem}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{r\_library}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{ch4.r"}\NormalTok{)}
+
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_chunk}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{fig.path =} \StringTok{"./forecasting/"}\NormalTok{)}
+
+\CommentTok{\# Load required packages}
+\FunctionTok{library}\NormalTok{(RMySQL)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: DBI
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyr)}
+\FunctionTok{library}\NormalTok{(lubridate)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'lubridate'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     date, intersect, setdiff, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggpubr)}
+
+
+\CommentTok{\# Database connection}
+\NormalTok{con }\OtherTok{\textless{}{-}} \FunctionTok{dbConnect}\NormalTok{(}\FunctionTok{MySQL}\NormalTok{(),}
+                \AttributeTok{user =} \StringTok{"root"}\NormalTok{,         }\CommentTok{\# Replace with your MySQL username}
+                \AttributeTok{password =} \StringTok{""}\NormalTok{,         }\CommentTok{\# Replace with your MySQL password}
+                \AttributeTok{dbname =} \StringTok{"pcc\_forecast\_db"}\NormalTok{,}
+                \AttributeTok{host =} \StringTok{"127.0.0.1"}\NormalTok{)}
+
+\CommentTok{\# Convert all matrix text to float}
+\NormalTok{matrix\_to\_float }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(mat) \{}
+  \CommentTok{\# Convert matrix to numeric vector and then back to matrix}
+\NormalTok{  numeric\_data }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(mat)}
+  \CommentTok{\# Restore matrix dimensions}
+  \FunctionTok{matrix}\NormalTok{(numeric\_data, }\AttributeTok{nrow =} \FunctionTok{nrow}\NormalTok{(mat), }\AttributeTok{ncol =} \FunctionTok{ncol}\NormalTok{(mat), }
+         \AttributeTok{dimnames =} \FunctionTok{dimnames}\NormalTok{(mat))}
+\NormalTok{\}}
+
+\CommentTok{\# Replace non{-}numeric values with NA or a default number (e.g., 0)}
+\NormalTok{matrix\_to\_float\_safe }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(mat) \{}
+  \CommentTok{\# Convert elements to numeric, suppress warnings}
+\NormalTok{  numeric\_data }\OtherTok{\textless{}{-}} \FunctionTok{suppressWarnings}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(mat))}
+  \CommentTok{\# Restore matrix structure}
+  \FunctionTok{matrix}\NormalTok{(numeric\_data, }\AttributeTok{nrow =} \FunctionTok{nrow}\NormalTok{(mat), }\AttributeTok{ncol =} \FunctionTok{ncol}\NormalTok{(mat), }
+         \AttributeTok{dimnames =} \FunctionTok{dimnames}\NormalTok{(mat))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ticket\_func }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(year\_) \{}
+\NormalTok{  ticket\_data }\OtherTok{\textless{}{-}} \FunctionTok{dbGetQuery}\NormalTok{(con, }\FunctionTok{paste0}\NormalTok{(}\StringTok{" }
+\StringTok{  SELECT}
+\StringTok{    concat(}
+\StringTok{      DATE\_FORMAT(STR\_TO\_DATE(CONCAT(year,\textquotesingle{}{-}\textquotesingle{},month,\textquotesingle{}{-}01\textquotesingle{}), \textquotesingle{}\%Y{-}\%M{-}\%d\textquotesingle{}), \textquotesingle{}\%Y\textquotesingle{})+}
+\StringTok{      DATE\_FORMAT(STR\_TO\_DATE(CONCAT(year,\textquotesingle{}{-}\textquotesingle{},month,\textquotesingle{}{-}01\textquotesingle{}), \textquotesingle{}\%Y{-}\%M{-}\%d\textquotesingle{}), \textquotesingle{}\%m\textquotesingle{})/12{-}(1/24)}
+\StringTok{    )}
+\StringTok{    x}
+\StringTok{    ,TicketSell y}
+\StringTok{  FROM htaticketing }
+\StringTok{  WHERE 1=1}
+\StringTok{    AND DATE\_FORMAT(STR\_TO\_DATE(CONCAT(year,\textquotesingle{}{-}\textquotesingle{},month,\textquotesingle{}{-}01\textquotesingle{}), \textquotesingle{}\%Y{-}\%M{-}\%d\textquotesingle{}), \textquotesingle{}\%Y{-}\%m\textquotesingle{}) \textless{} DATE\_FORMAT(NOW(), \textquotesingle{}\%Y{-}\%m\textquotesingle{})}
+\StringTok{    AND year="}\NormalTok{,year\_,}\StringTok{"}
+\StringTok{  order by DATE\_FORMAT(STR\_TO\_DATE(CONCAT(year,\textquotesingle{}{-}\textquotesingle{},month,\textquotesingle{}{-}01\textquotesingle{}), \textquotesingle{}\%Y{-}\%M{-}\%d\textquotesingle{}), \textquotesingle{}\%Y{-}\%m\textquotesingle{}) asc}
+\StringTok{  ;}
+\StringTok{  "}
+\NormalTok{  )}
+\NormalTok{  )}
+\NormalTok{  ticket\_data}
+\NormalTok{  A}\OtherTok{=}\NormalTok{matrix\_data }\OtherTok{\textless{}{-}} \FunctionTok{as.matrix}\NormalTok{(ticket\_data)}
+\NormalTok{  A }\OtherTok{\textless{}{-}} \FunctionTok{matrix\_to\_float\_safe}\NormalTok{(A)}
+\NormalTok{  A}
+\NormalTok{  f }\OtherTok{=} \FunctionTok{lagrange}\NormalTok{(A)}
+  \FunctionTok{print}\NormalTok{(f)}
+  \FunctionTok{curve}\NormalTok{(f,year\_}\FloatTok{+0.00}\NormalTok{,year\_}\FloatTok{+0.99}\NormalTok{)    }\CommentTok{\# Note that you can plot the Lagrange polynomial easily on R}
+\NormalTok{\}}
+\FunctionTok{ticket\_func}\NormalTok{(}\DecValTok{2010}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'MASS'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     select
+\end{verbatim}
+
+\begin{verbatim}
+## function (x) 
+## -64883809816825/73087 * (x - 2010.125) * (x - 2010.2083) * (x - 
+##     2010.2917) * (x - 2010.375) * (x - 2010.4583) * (x - 2010.5417) * 
+##     (x - 2010.625) * (x - 2010.7083) * (x - 2010.7917) * (x - 
+##     2010.875) * (x - 2010.9583) + 573602896214809/65536 * (x - 
+##     2010.0417) * (x - 2010.2083) * (x - 2010.2917) * (x - 2010.375) * 
+##     (x - 2010.4583) * (x - 2010.5417) * (x - 2010.625) * (x - 
+##     2010.7083) * (x - 2010.7917) * (x - 2010.875) * (x - 2010.9583) + 
+##     -990587072596195/17142 * (x - 2010.0417) * (x - 2010.125) * 
+##         (x - 2010.2917) * (x - 2010.375) * (x - 2010.4583) * 
+##         (x - 2010.5417) * (x - 2010.625) * (x - 2010.7083) * 
+##         (x - 2010.7917) * (x - 2010.875) * (x - 2010.9583) + 
+##     5646225132199/32 * (x - 2010.0417) * (x - 2010.125) * (x - 
+##         2010.2083) * (x - 2010.375) * (x - 2010.4583) * (x - 
+##         2010.5417) * (x - 2010.625) * (x - 2010.7083) * (x - 
+##         2010.7917) * (x - 2010.875) * (x - 2010.9583) + -530951287911770/1571 * 
+##     (x - 2010.0417) * (x - 2010.125) * (x - 2010.2083) * (x - 
+##     2010.2917) * (x - 2010.4583) * (x - 2010.5417) * (x - 2010.625) * 
+##     (x - 2010.7083) * (x - 2010.7917) * (x - 2010.875) * (x - 
+##     2010.9583) + 8943408747700691/16384 * (x - 2010.0417) * (x - 
+##     2010.125) * (x - 2010.2083) * (x - 2010.2917) * (x - 2010.375) * 
+##     (x - 2010.5417) * (x - 2010.625) * (x - 2010.7083) * (x - 
+##     2010.7917) * (x - 2010.875) * (x - 2010.9583) + -5225686879828829/8192 * 
+##     (x - 2010.0417) * (x - 2010.125) * (x - 2010.2083) * (x - 
+##     2010.2917) * (x - 2010.375) * (x - 2010.4583) * (x - 2010.625) * 
+##     (x - 2010.7083) * (x - 2010.7917) * (x - 2010.875) * (x - 
+##     2010.9583) + 802465625076129/2048 * (x - 2010.0417) * (x - 
+##     2010.125) * (x - 2010.2083) * (x - 2010.2917) * (x - 2010.375) * 
+##     (x - 2010.4583) * (x - 2010.5417) * (x - 2010.7083) * (x - 
+##     2010.7917) * (x - 2010.875) * (x - 2010.9583) + -2309996067303507/16384 * 
+##     (x - 2010.0417) * (x - 2010.125) * (x - 2010.2083) * (x - 
+##     2010.2917) * (x - 2010.375) * (x - 2010.4583) * (x - 2010.5417) * 
+##     (x - 2010.625) * (x - 2010.7917) * (x - 2010.875) * (x - 
+##     2010.9583) + 359674823612481/4096 * (x - 2010.0417) * (x - 
+##     2010.125) * (x - 2010.2083) * (x - 2010.2917) * (x - 2010.375) * 
+##     (x - 2010.4583) * (x - 2010.5417) * (x - 2010.625) * (x - 
+##     2010.7083) * (x - 2010.875) * (x - 2010.9583) + -527057642489661/53294 * 
+##     (x - 2010.0417) * (x - 2010.125) * (x - 2010.2083) * (x - 
+##     2010.2917) * (x - 2010.375) * (x - 2010.4583) * (x - 2010.5417) * 
+##     (x - 2010.625) * (x - 2010.7083) * (x - 2010.7917) * (x - 
+##     2010.9583) + 744973082972467/777610 * (x - 2010.0417) * (x - 
+##     2010.125) * (x - 2010.2083) * (x - 2010.2917) * (x - 2010.375) * 
+##     (x - 2010.4583) * (x - 2010.5417) * (x - 2010.625) * (x - 
+##     2010.7083) * (x - 2010.7917) * (x - 2010.875)
+## <environment: 0x000001f85d5a5b98>
+\end{verbatim}
+
+\includegraphics{./forecasting/unnamed-chunk-2-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ticket\_func}\NormalTok{(}\DecValTok{2011}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x) 
+## -4145515513544/4831 * (x - 2011.125) * (x - 2011.2083) * (x - 
+##     2011.2917) * (x - 2011.375) * (x - 2011.4583) * (x - 2011.5417) * 
+##     (x - 2011.625) * (x - 2011.7083) * (x - 2011.7917) * (x - 
+##     2011.875) * (x - 2011.9583) + 5035588363848795/524288 * (x - 
+##     2011.0417) * (x - 2011.2083) * (x - 2011.2917) * (x - 2011.375) * 
+##     (x - 2011.4583) * (x - 2011.5417) * (x - 2011.625) * (x - 
+##     2011.7083) * (x - 2011.7917) * (x - 2011.875) * (x - 2011.9583) + 
+##     -6272602591846459/118651 * (x - 2011.0417) * (x - 2011.125) * 
+##         (x - 2011.2917) * (x - 2011.375) * (x - 2011.4583) * 
+##         (x - 2011.5417) * (x - 2011.625) * (x - 2011.7083) * 
+##         (x - 2011.7917) * (x - 2011.875) * (x - 2011.9583) + 
+##     2505129733700049/16384 * (x - 2011.0417) * (x - 2011.125) * 
+##         (x - 2011.2083) * (x - 2011.375) * (x - 2011.4583) * 
+##         (x - 2011.5417) * (x - 2011.625) * (x - 2011.7083) * 
+##         (x - 2011.7917) * (x - 2011.875) * (x - 2011.9583) + 
+##     -5181940151388831/16384 * (x - 2011.0417) * (x - 2011.125) * 
+##         (x - 2011.2083) * (x - 2011.2917) * (x - 2011.4583) * 
+##         (x - 2011.5417) * (x - 2011.625) * (x - 2011.7083) * 
+##         (x - 2011.7917) * (x - 2011.875) * (x - 2011.9583) + 
+##     498927938040643/1024 * (x - 2011.0417) * (x - 2011.125) * 
+##         (x - 2011.2083) * (x - 2011.2917) * (x - 2011.375) * 
+##         (x - 2011.5417) * (x - 2011.625) * (x - 2011.7083) * 
+##         (x - 2011.7917) * (x - 2011.875) * (x - 2011.9583) + 
+##     -8798317298628699/16384 * (x - 2011.0417) * (x - 2011.125) * 
+##         (x - 2011.2083) * (x - 2011.2917) * (x - 2011.375) * 
+##         (x - 2011.4583) * (x - 2011.625) * (x - 2011.7083) * 
+##         (x - 2011.7917) * (x - 2011.875) * (x - 2011.9583) + 
+##     2876852860183201/8192 * (x - 2011.0417) * (x - 2011.125) * 
+##         (x - 2011.2083) * (x - 2011.2917) * (x - 2011.375) * 
+##         (x - 2011.4583) * (x - 2011.5417) * (x - 2011.7083) * 
+##         (x - 2011.7917) * (x - 2011.875) * (x - 2011.9583) + 
+##     -4593819963720709/32768 * (x - 2011.0417) * (x - 2011.125) * 
+##         (x - 2011.2083) * (x - 2011.2917) * (x - 2011.375) * 
+##         (x - 2011.4583) * (x - 2011.5417) * (x - 2011.625) * 
+##         (x - 2011.7917) * (x - 2011.875) * (x - 2011.9583) + 
+##     923854427004348/10985 * (x - 2011.0417) * (x - 2011.125) * 
+##         (x - 2011.2083) * (x - 2011.2917) * (x - 2011.375) * 
+##         (x - 2011.4583) * (x - 2011.5417) * (x - 2011.625) * 
+##         (x - 2011.7083) * (x - 2011.875) * (x - 2011.9583) + 
+##     -222301013134111/23961 * (x - 2011.0417) * (x - 2011.125) * 
+##         (x - 2011.2083) * (x - 2011.2917) * (x - 2011.375) * 
+##         (x - 2011.4583) * (x - 2011.5417) * (x - 2011.625) * 
+##         (x - 2011.7083) * (x - 2011.7917) * (x - 2011.9583) + 
+##     87932180885140/74171 * (x - 2011.0417) * (x - 2011.125) * 
+##         (x - 2011.2083) * (x - 2011.2917) * (x - 2011.375) * 
+##         (x - 2011.4583) * (x - 2011.5417) * (x - 2011.625) * 
+##         (x - 2011.7083) * (x - 2011.7917) * (x - 2011.875)
+## <environment: 0x000001f85f5a4e78>
+\end{verbatim}
+
+\includegraphics{./forecasting/unnamed-chunk-2-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ticket\_func}\NormalTok{(}\DecValTok{2012}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x) 
+## -6513926047364/6609 * (x - 2012.125) * (x - 2012.2083) * (x - 
+##     2012.2917) * (x - 2012.375) * (x - 2012.4583) * (x - 2012.5417) * 
+##     (x - 2012.625) * (x - 2012.7083) * (x - 2012.7917) * (x - 
+##     2012.875) * (x - 2012.9583) + 5382559168619399/524288 * (x - 
+##     2012.0417) * (x - 2012.2083) * (x - 2012.2917) * (x - 2012.375) * 
+##     (x - 2012.4583) * (x - 2012.5417) * (x - 2012.625) * (x - 
+##     2012.7083) * (x - 2012.7917) * (x - 2012.875) * (x - 2012.9583) + 
+##     -1018157086470381/18011 * (x - 2012.0417) * (x - 2012.125) * 
+##         (x - 2012.2917) * (x - 2012.375) * (x - 2012.4583) * 
+##         (x - 2012.5417) * (x - 2012.625) * (x - 2012.7083) * 
+##         (x - 2012.7917) * (x - 2012.875) * (x - 2012.9583) + 
+##     1412617758039347/8192 * (x - 2012.0417) * (x - 2012.125) * 
+##         (x - 2012.2083) * (x - 2012.375) * (x - 2012.4583) * 
+##         (x - 2012.5417) * (x - 2012.625) * (x - 2012.7083) * 
+##         (x - 2012.7917) * (x - 2012.875) * (x - 2012.9583) + 
+##     -2913356033616517/8192 * (x - 2012.0417) * (x - 2012.125) * 
+##         (x - 2012.2083) * (x - 2012.2917) * (x - 2012.4583) * 
+##         (x - 2012.5417) * (x - 2012.625) * (x - 2012.7083) * 
+##         (x - 2012.7917) * (x - 2012.875) * (x - 2012.9583) + 
+##     8930308257638851/16384 * (x - 2012.0417) * (x - 2012.125) * 
+##         (x - 2012.2083) * (x - 2012.2917) * (x - 2012.375) * 
+##         (x - 2012.5417) * (x - 2012.625) * (x - 2012.7083) * 
+##         (x - 2012.7917) * (x - 2012.875) * (x - 2012.9583) + 
+##     -2757547508903933/4096 * (x - 2012.0417) * (x - 2012.125) * 
+##         (x - 2012.2083) * (x - 2012.2917) * (x - 2012.375) * 
+##         (x - 2012.4583) * (x - 2012.625) * (x - 2012.7083) * 
+##         (x - 2012.7917) * (x - 2012.875) * (x - 2012.9583) + 
+##     1866671590970319/4096 * (x - 2012.0417) * (x - 2012.125) * 
+##         (x - 2012.2083) * (x - 2012.2917) * (x - 2012.375) * 
+##         (x - 2012.4583) * (x - 2012.5417) * (x - 2012.7083) * 
+##         (x - 2012.7917) * (x - 2012.875) * (x - 2012.9583) + 
+##     -282885935512449/2048 * (x - 2012.0417) * (x - 2012.125) * 
+##         (x - 2012.2083) * (x - 2012.2917) * (x - 2012.375) * 
+##         (x - 2012.4583) * (x - 2012.5417) * (x - 2012.625) * 
+##         (x - 2012.7917) * (x - 2012.875) * (x - 2012.9583) + 
+##     354052332402285/4519 * (x - 2012.0417) * (x - 2012.125) * 
+##         (x - 2012.2083) * (x - 2012.2917) * (x - 2012.375) * 
+##         (x - 2012.4583) * (x - 2012.5417) * (x - 2012.625) * 
+##         (x - 2012.7083) * (x - 2012.875) * (x - 2012.9583) + 
+##     -641076901399495/65536 * (x - 2012.0417) * (x - 2012.125) * 
+##         (x - 2012.2083) * (x - 2012.2917) * (x - 2012.375) * 
+##         (x - 2012.4583) * (x - 2012.5417) * (x - 2012.625) * 
+##         (x - 2012.7083) * (x - 2012.7917) * (x - 2012.9583) + 
+##     1683758529009/1556 * (x - 2012.0417) * (x - 2012.125) * (x - 
+##         2012.2083) * (x - 2012.2917) * (x - 2012.375) * (x - 
+##         2012.4583) * (x - 2012.5417) * (x - 2012.625) * (x - 
+##         2012.7083) * (x - 2012.7917) * (x - 2012.875)
+## <environment: 0x000001f85d71d268>
+\end{verbatim}
+
+\includegraphics{./forecasting/unnamed-chunk-2-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ticket\_func}\NormalTok{(}\DecValTok{2013}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x) 
+## -69531477414410/75213 * (x - 2013.125) * (x - 2013.2083) * (x - 
+##     2013.2917) * (x - 2013.375) * (x - 2013.4583) * (x - 2013.5417) * 
+##     (x - 2013.625) * (x - 2013.7083) * (x - 2013.7917) * (x - 
+##     2013.875) * (x - 2013.9583) + 362170918973403/32768 * (x - 
+##     2013.0417) * (x - 2013.2083) * (x - 2013.2917) * (x - 2013.375) * 
+##     (x - 2013.4583) * (x - 2013.5417) * (x - 2013.625) * (x - 
+##     2013.7083) * (x - 2013.7917) * (x - 2013.875) * (x - 2013.9583) + 
+##     -3903604148929493/65536 * (x - 2013.0417) * (x - 2013.125) * 
+##         (x - 2013.2917) * (x - 2013.375) * (x - 2013.4583) * 
+##         (x - 2013.5417) * (x - 2013.625) * (x - 2013.7083) * 
+##         (x - 2013.7917) * (x - 2013.875) * (x - 2013.9583) + 
+##     5858036479724925/32768 * (x - 2013.0417) * (x - 2013.125) * 
+##         (x - 2013.2083) * (x - 2013.375) * (x - 2013.4583) * 
+##         (x - 2013.5417) * (x - 2013.625) * (x - 2013.7083) * 
+##         (x - 2013.7917) * (x - 2013.875) * (x - 2013.9583) + 
+##     -5969703808682163/16384 * (x - 2013.0417) * (x - 2013.125) * 
+##         (x - 2013.2083) * (x - 2013.2917) * (x - 2013.4583) * 
+##         (x - 2013.5417) * (x - 2013.625) * (x - 2013.7083) * 
+##         (x - 2013.7917) * (x - 2013.875) * (x - 2013.9583) + 
+##     4644616756118181/8192 * (x - 2013.0417) * (x - 2013.125) * 
+##         (x - 2013.2083) * (x - 2013.2917) * (x - 2013.375) * 
+##         (x - 2013.5417) * (x - 2013.625) * (x - 2013.7083) * 
+##         (x - 2013.7917) * (x - 2013.875) * (x - 2013.9583) + 
+##     -5212022927828845/8192 * (x - 2013.0417) * (x - 2013.125) * 
+##         (x - 2013.2083) * (x - 2013.2917) * (x - 2013.375) * 
+##         (x - 2013.4583) * (x - 2013.625) * (x - 2013.7083) * 
+##         (x - 2013.7917) * (x - 2013.875) * (x - 2013.9583) + 
+##     6456379221656555/16384 * (x - 2013.0417) * (x - 2013.125) * 
+##         (x - 2013.2083) * (x - 2013.2917) * (x - 2013.375) * 
+##         (x - 2013.4583) * (x - 2013.5417) * (x - 2013.7083) * 
+##         (x - 2013.7917) * (x - 2013.875) * (x - 2013.9583) + 
+##     -97476373003042/579 * (x - 2013.0417) * (x - 2013.125) * 
+##         (x - 2013.2083) * (x - 2013.2917) * (x - 2013.375) * 
+##         (x - 2013.4583) * (x - 2013.5417) * (x - 2013.625) * 
+##         (x - 2013.7917) * (x - 2013.875) * (x - 2013.9583) + 
+##     6230854641126091/131072 * (x - 2013.0417) * (x - 2013.125) * 
+##         (x - 2013.2083) * (x - 2013.2917) * (x - 2013.375) * 
+##         (x - 2013.4583) * (x - 2013.5417) * (x - 2013.625) * 
+##         (x - 2013.7083) * (x - 2013.875) * (x - 2013.9583) + 
+##     -866491703998111/101665 * (x - 2013.0417) * (x - 2013.125) * 
+##         (x - 2013.2083) * (x - 2013.2917) * (x - 2013.375) * 
+##         (x - 2013.4583) * (x - 2013.5417) * (x - 2013.625) * 
+##         (x - 2013.7083) * (x - 2013.7917) * (x - 2013.9583) + 
+##     1320645932610724/1080651 * (x - 2013.0417) * (x - 2013.125) * 
+##         (x - 2013.2083) * (x - 2013.2917) * (x - 2013.375) * 
+##         (x - 2013.4583) * (x - 2013.5417) * (x - 2013.625) * 
+##         (x - 2013.7083) * (x - 2013.7917) * (x - 2013.875)
+## <environment: 0x000001f85d95a690>
+\end{verbatim}
+
+\includegraphics{./forecasting/unnamed-chunk-2-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ticket\_func}\NormalTok{(}\DecValTok{2014}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x) 
+## -142421577126277/145206 * (x - 2014.125) * (x - 2014.2083) * 
+##     (x - 2014.2917) * (x - 2014.375) * (x - 2014.4583) * (x - 
+##     2014.5417) * (x - 2014.625) * (x - 2014.7083) * (x - 2014.7917) * 
+##     (x - 2014.875) * (x - 2014.9583) + 6274497685500/607 * (x - 
+##     2014.0417) * (x - 2014.2083) * (x - 2014.2917) * (x - 2014.375) * 
+##     (x - 2014.4583) * (x - 2014.5417) * (x - 2014.625) * (x - 
+##     2014.7083) * (x - 2014.7917) * (x - 2014.875) * (x - 2014.9583) + 
+##     -117483501931093/1969 * (x - 2014.0417) * (x - 2014.125) * 
+##         (x - 2014.2917) * (x - 2014.375) * (x - 2014.4583) * 
+##         (x - 2014.5417) * (x - 2014.625) * (x - 2014.7083) * 
+##         (x - 2014.7917) * (x - 2014.875) * (x - 2014.9583) + 
+##     2848991794267801/16384 * (x - 2014.0417) * (x - 2014.125) * 
+##         (x - 2014.2083) * (x - 2014.375) * (x - 2014.4583) * 
+##         (x - 2014.5417) * (x - 2014.625) * (x - 2014.7083) * 
+##         (x - 2014.7917) * (x - 2014.875) * (x - 2014.9583) + 
+##     -3054837298923577/8192 * (x - 2014.0417) * (x - 2014.125) * 
+##         (x - 2014.2083) * (x - 2014.2917) * (x - 2014.4583) * 
+##         (x - 2014.5417) * (x - 2014.625) * (x - 2014.7083) * 
+##         (x - 2014.7917) * (x - 2014.875) * (x - 2014.9583) + 
+##     1141644319421321/2048 * (x - 2014.0417) * (x - 2014.125) * 
+##         (x - 2014.2083) * (x - 2014.2917) * (x - 2014.375) * 
+##         (x - 2014.5417) * (x - 2014.625) * (x - 2014.7083) * 
+##         (x - 2014.7917) * (x - 2014.875) * (x - 2014.9583) + 
+##     -5090244716447547/8192 * (x - 2014.0417) * (x - 2014.125) * 
+##         (x - 2014.2083) * (x - 2014.2917) * (x - 2014.375) * 
+##         (x - 2014.4583) * (x - 2014.625) * (x - 2014.7083) * 
+##         (x - 2014.7917) * (x - 2014.875) * (x - 2014.9583) + 
+##     695448390410593/2048 * (x - 2014.0417) * (x - 2014.125) * 
+##         (x - 2014.2083) * (x - 2014.2917) * (x - 2014.375) * 
+##         (x - 2014.4583) * (x - 2014.5417) * (x - 2014.7083) * 
+##         (x - 2014.7917) * (x - 2014.875) * (x - 2014.9583) + 
+##     -638423655723947/5057 * (x - 2014.0417) * (x - 2014.125) * 
+##         (x - 2014.2083) * (x - 2014.2917) * (x - 2014.375) * 
+##         (x - 2014.4583) * (x - 2014.5417) * (x - 2014.625) * 
+##         (x - 2014.7917) * (x - 2014.875) * (x - 2014.9583) + 
+##     6089914811842699/131072 * (x - 2014.0417) * (x - 2014.125) * 
+##         (x - 2014.2083) * (x - 2014.2917) * (x - 2014.375) * 
+##         (x - 2014.4583) * (x - 2014.5417) * (x - 2014.625) * 
+##         (x - 2014.7083) * (x - 2014.875) * (x - 2014.9583) + 
+##     -254347137052152/31379 * (x - 2014.0417) * (x - 2014.125) * 
+##         (x - 2014.2083) * (x - 2014.2917) * (x - 2014.375) * 
+##         (x - 2014.4583) * (x - 2014.5417) * (x - 2014.625) * 
+##         (x - 2014.7083) * (x - 2014.7917) * (x - 2014.9583) + 
+##     778258178732086/688435 * (x - 2014.0417) * (x - 2014.125) * 
+##         (x - 2014.2083) * (x - 2014.2917) * (x - 2014.375) * 
+##         (x - 2014.4583) * (x - 2014.5417) * (x - 2014.625) * 
+##         (x - 2014.7083) * (x - 2014.7917) * (x - 2014.875)
+## <environment: 0x000001f85dc2f620>
+\end{verbatim}
+
+\includegraphics{./forecasting/unnamed-chunk-2-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ticket\_func}\NormalTok{(}\DecValTok{2015}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x) 
+## -28108988521046/30775 * (x - 2015.125) * (x - 2015.2083) * (x - 
+##     2015.2917) * (x - 2015.375) * (x - 2015.4583) * (x - 2015.5417) * 
+##     (x - 2015.625) * (x - 2015.7083) * (x - 2015.7917) * (x - 
+##     2015.875) * (x - 2015.9583) + 56103998185517/5660 * (x - 
+##     2015.0417) * (x - 2015.2083) * (x - 2015.2917) * (x - 2015.375) * 
+##     (x - 2015.4583) * (x - 2015.5417) * (x - 2015.625) * (x - 
+##     2015.7083) * (x - 2015.7917) * (x - 2015.875) * (x - 2015.9583) + 
+##     -630449481272382/11653 * (x - 2015.0417) * (x - 2015.125) * 
+##         (x - 2015.2917) * (x - 2015.375) * (x - 2015.4583) * 
+##         (x - 2015.5417) * (x - 2015.625) * (x - 2015.7083) * 
+##         (x - 2015.7917) * (x - 2015.875) * (x - 2015.9583) + 
+##     4929629048631137/32768 * (x - 2015.0417) * (x - 2015.125) * 
+##         (x - 2015.2083) * (x - 2015.375) * (x - 2015.4583) * 
+##         (x - 2015.5417) * (x - 2015.625) * (x - 2015.7083) * 
+##         (x - 2015.7917) * (x - 2015.875) * (x - 2015.9583) + 
+##     -5506390426705093/16384 * (x - 2015.0417) * (x - 2015.125) * 
+##         (x - 2015.2083) * (x - 2015.2917) * (x - 2015.4583) * 
+##         (x - 2015.5417) * (x - 2015.625) * (x - 2015.7083) * 
+##         (x - 2015.7917) * (x - 2015.875) * (x - 2015.9583) + 
+##     4661027585066615/8192 * (x - 2015.0417) * (x - 2015.125) * 
+##         (x - 2015.2083) * (x - 2015.2917) * (x - 2015.375) * 
+##         (x - 2015.5417) * (x - 2015.625) * (x - 2015.7083) * 
+##         (x - 2015.7917) * (x - 2015.875) * (x - 2015.9583) + 
+##     -4789285608736565/8192 * (x - 2015.0417) * (x - 2015.125) * 
+##         (x - 2015.2083) * (x - 2015.2917) * (x - 2015.375) * 
+##         (x - 2015.4583) * (x - 2015.625) * (x - 2015.7083) * 
+##         (x - 2015.7917) * (x - 2015.875) * (x - 2015.9583) + 
+##     906749006096641/2691 * (x - 2015.0417) * (x - 2015.125) * 
+##         (x - 2015.2083) * (x - 2015.2917) * (x - 2015.375) * 
+##         (x - 2015.4583) * (x - 2015.5417) * (x - 2015.7083) * 
+##         (x - 2015.7917) * (x - 2015.875) * (x - 2015.9583) + 
+##     -1627258613965462/13827 * (x - 2015.0417) * (x - 2015.125) * 
+##         (x - 2015.2083) * (x - 2015.2917) * (x - 2015.375) * 
+##         (x - 2015.4583) * (x - 2015.5417) * (x - 2015.625) * 
+##         (x - 2015.7917) * (x - 2015.875) * (x - 2015.9583) + 
+##     180338593096773/3818 * (x - 2015.0417) * (x - 2015.125) * 
+##         (x - 2015.2083) * (x - 2015.2917) * (x - 2015.375) * 
+##         (x - 2015.4583) * (x - 2015.5417) * (x - 2015.625) * 
+##         (x - 2015.7083) * (x - 2015.875) * (x - 2015.9583) + 
+##     -1147501201009531/131072 * (x - 2015.0417) * (x - 2015.125) * 
+##         (x - 2015.2083) * (x - 2015.2917) * (x - 2015.375) * 
+##         (x - 2015.4583) * (x - 2015.5417) * (x - 2015.625) * 
+##         (x - 2015.7083) * (x - 2015.7917) * (x - 2015.9583) + 
+##     2339584382312441/2097152 * (x - 2015.0417) * (x - 2015.125) * 
+##         (x - 2015.2083) * (x - 2015.2917) * (x - 2015.375) * 
+##         (x - 2015.4583) * (x - 2015.5417) * (x - 2015.625) * 
+##         (x - 2015.7083) * (x - 2015.7917) * (x - 2015.875)
+## <environment: 0x000001f85df49b30>
+\end{verbatim}
+
+\includegraphics{./forecasting/unnamed-chunk-2-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ticket\_func}\NormalTok{(}\DecValTok{2016}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## function (x) 
+## -174613338822342/193229 * (x - 2016.125) * (x - 2016.2083) * 
+##     (x - 2016.2917) * (x - 2016.375) * (x - 2016.4583) * (x - 
+##     2016.5417) * (x - 2016.625) * (x - 2016.7083) * (x - 2016.7917) * 
+##     (x - 2016.875) * (x - 2016.9583) + 159499511056031/15194 * 
+##     (x - 2016.0417) * (x - 2016.2083) * (x - 2016.2917) * (x - 
+##     2016.375) * (x - 2016.4583) * (x - 2016.5417) * (x - 2016.625) * 
+##     (x - 2016.7083) * (x - 2016.7917) * (x - 2016.875) * (x - 
+##     2016.9583) + -227183806627511/3910 * (x - 2016.0417) * (x - 
+##     2016.125) * (x - 2016.2917) * (x - 2016.375) * (x - 2016.4583) * 
+##     (x - 2016.5417) * (x - 2016.625) * (x - 2016.7083) * (x - 
+##     2016.7917) * (x - 2016.875) * (x - 2016.9583) + 2630320810232814/17227 * 
+##     (x - 2016.0417) * (x - 2016.125) * (x - 2016.2083) * (x - 
+##     2016.375) * (x - 2016.4583) * (x - 2016.5417) * (x - 2016.625) * 
+##     (x - 2016.7083) * (x - 2016.7917) * (x - 2016.875) * (x - 
+##     2016.9583) + -4415010050967506/12583 * (x - 2016.0417) * 
+##     (x - 2016.125) * (x - 2016.2083) * (x - 2016.2917) * (x - 
+##     2016.4583) * (x - 2016.5417) * (x - 2016.625) * (x - 2016.7083) * 
+##     (x - 2016.7917) * (x - 2016.875) * (x - 2016.9583) + 566701844287985/1024 * 
+##     (x - 2016.0417) * (x - 2016.125) * (x - 2016.2083) * (x - 
+##     2016.2917) * (x - 2016.375) * (x - 2016.5417) * (x - 2016.625) * 
+##     (x - 2016.7083) * (x - 2016.7917) * (x - 2016.875) * (x - 
+##     2016.9583) + -5195682531622679/8192 * (x - 2016.0417) * (x - 
+##     2016.125) * (x - 2016.2083) * (x - 2016.2917) * (x - 2016.375) * 
+##     (x - 2016.4583) * (x - 2016.625) * (x - 2016.7083) * (x - 
+##     2016.7917) * (x - 2016.875) * (x - 2016.9583) + 1503452428007639/4096 * 
+##     (x - 2016.0417) * (x - 2016.125) * (x - 2016.2083) * (x - 
+##     2016.2917) * (x - 2016.375) * (x - 2016.4583) * (x - 2016.5417) * 
+##     (x - 2016.7083) * (x - 2016.7917) * (x - 2016.875) * (x - 
+##     2016.9583) + -2725640638231871/18987 * (x - 2016.0417) * 
+##     (x - 2016.125) * (x - 2016.2083) * (x - 2016.2917) * (x - 
+##     2016.375) * (x - 2016.4583) * (x - 2016.5417) * (x - 2016.625) * 
+##     (x - 2016.7917) * (x - 2016.875) * (x - 2016.9583) + 242736477138213/4988 * 
+##     (x - 2016.0417) * (x - 2016.125) * (x - 2016.2083) * (x - 
+##     2016.2917) * (x - 2016.375) * (x - 2016.4583) * (x - 2016.5417) * 
+##     (x - 2016.625) * (x - 2016.7083) * (x - 2016.875) * (x - 
+##     2016.9583) + -21744909370255/2278 * (x - 2016.0417) * (x - 
+##     2016.125) * (x - 2016.2083) * (x - 2016.2917) * (x - 2016.375) * 
+##     (x - 2016.4583) * (x - 2016.5417) * (x - 2016.625) * (x - 
+##     2016.7083) * (x - 2016.7917) * (x - 2016.9583) + 2401695512454027/2097152 * 
+##     (x - 2016.0417) * (x - 2016.125) * (x - 2016.2083) * (x - 
+##     2016.2917) * (x - 2016.375) * (x - 2016.4583) * (x - 2016.5417) * 
+##     (x - 2016.625) * (x - 2016.7083) * (x - 2016.7917) * (x - 
+##     2016.875)
+## <environment: 0x000001f86238c938>
+\end{verbatim}
+
+\includegraphics{./forecasting/unnamed-chunk-2-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Disconnect from database}
+\FunctionTok{dbDisconnect}\NormalTok{(con)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\end{document}

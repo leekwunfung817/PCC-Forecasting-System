@@ -1,0 +1,2056 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={R Notebook},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{R Notebook}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(english)}
+\FunctionTok{source}\NormalTok{(}\StringTok{"C:}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{xampp}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{htdocs}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{TacticalDataDrivenDecisionSystem}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{r\_library}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{ch2.r"}\NormalTok{)}
+\FunctionTok{source}\NormalTok{(}\StringTok{"C:}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{xampp}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{htdocs}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{TacticalDataDrivenDecisionSystem}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{r\_library}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{ch3.r"}\NormalTok{)}
+\FunctionTok{source}\NormalTok{(}\StringTok{"C:}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{xampp}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{htdocs}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{TacticalDataDrivenDecisionSystem}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{r\_library}\SpecialCharTok{\textbackslash{}\textbackslash{}}\StringTok{ch4.r"}\NormalTok{)}
+
+
+
+
+\CommentTok{\# Load required packages}
+\FunctionTok{library}\NormalTok{(RMySQL)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: DBI
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyr)}
+\FunctionTok{library}\NormalTok{(lubridate)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'lubridate'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     date, intersect, setdiff, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggpubr)}
+
+
+\CommentTok{\# Database connection}
+\NormalTok{con }\OtherTok{\textless{}{-}} \FunctionTok{dbConnect}\NormalTok{(}\FunctionTok{MySQL}\NormalTok{(),}
+                \AttributeTok{user =} \StringTok{"root"}\NormalTok{,         }\CommentTok{\# Replace with your MySQL username}
+                \AttributeTok{password =} \StringTok{""}\NormalTok{,         }\CommentTok{\# Replace with your MySQL password}
+                \AttributeTok{dbname =} \StringTok{"pcc\_forecast\_db"}\NormalTok{,}
+                \AttributeTok{host =} \StringTok{"127.0.0.1"}\NormalTok{)}
+
+\CommentTok{\# Fetch data from all tables}
+\NormalTok{accom\_data }\OtherTok{\textless{}{-}} \FunctionTok{dbGetQuery}\NormalTok{(con, }\StringTok{"}
+\StringTok{SELECT * FROM \textasciigrave{}htaaccommodationchoices\textasciigrave{}}
+\StringTok{where 1=1}
+\StringTok{    and \textasciigrave{}value\textasciigrave{} is not null}
+\StringTok{  and \textasciigrave{}value\textasciigrave{}\textgreater{}0}
+\StringTok{;}
+\StringTok{"}\NormalTok{)}
+
+\NormalTok{air\_data }\OtherTok{\textless{}{-}} \FunctionTok{dbGetQuery}\NormalTok{(con, }\StringTok{"}
+\StringTok{SELECT * FROM \textasciigrave{}htaallvisitorsbyair\textasciigrave{} }
+\StringTok{WHERE 1=1}
+\StringTok{    and \textasciigrave{}value\textasciigrave{} is not null}
+\StringTok{  and \textasciigrave{}value\textasciigrave{} \textgreater{} 0}
+\StringTok{;"}\NormalTok{)}
+
+\NormalTok{travel\_data }\OtherTok{\textless{}{-}} \FunctionTok{dbGetQuery}\NormalTok{(con, }\StringTok{"SELECT * FROM htamethoodoftrave"}\NormalTok{)}
+
+\NormalTok{purpose\_data }\OtherTok{\textless{}{-}} \FunctionTok{dbGetQuery}\NormalTok{(con, }\StringTok{"}
+\StringTok{SELECT * FROM \textasciigrave{}htapurposeoftrip\textasciigrave{} WHERE 1=1}
+\StringTok{  and \textasciigrave{}value\textasciigrave{} is not null }
+\StringTok{  and \textasciigrave{}value\textasciigrave{}\textgreater{}0}
+\StringTok{;}
+\StringTok{"}\NormalTok{)}
+
+\NormalTok{ticket\_data }\OtherTok{\textless{}{-}} \FunctionTok{dbGetQuery}\NormalTok{(con, }\StringTok{" }
+\StringTok{SELECT * FROM htaticketing }
+\StringTok{WHERE 1=1}
+\StringTok{  AND DATE\_FORMAT(STR\_TO\_DATE(CONCAT(year,\textquotesingle{}{-}\textquotesingle{},month,\textquotesingle{}{-}01\textquotesingle{}), \textquotesingle{}\%Y{-}\%M{-}\%d\textquotesingle{}), \textquotesingle{}\%Y{-}\%m\textquotesingle{}) \textless{} DATE\_FORMAT(NOW(), \textquotesingle{}\%Y{-}\%m\textquotesingle{})}
+\StringTok{  AND TicketSell \textgreater{} 0}
+\StringTok{  AND TicketSell IS NOT NULL}
+\StringTok{;}
+\StringTok{"}\NormalTok{)}
+\NormalTok{ticket\_data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     Year     Month TicketSell
+## 1   2007     April      59376
+## 2   2007    August      73398
+## 3   2007  December      54265
+## 4   2007  February      49105
+## 5   2007   January      53107
+## 6   2007      July      76884
+## 7   2007      June      68172
+## 8   2007     March      61677
+## 9   2007       May      63607
+## 10  2007  November      51293
+## 11  2007   October      55170
+## 12  2007 September      47356
+## 13  2008     April      51623
+## 14  2008    August      59007
+## 15  2008  December      45347
+## 16  2008  February      50978
+## 17  2008   January      53057
+## 18  2008      July      66826
+## 19  2008      June      59799
+## 20  2008     March      60349
+## 21  2008       May      61340
+## 22  2008  November      41155
+## 23  2008   October      56859
+## 24  2008 September      39049
+## 25  2009     April      50888
+## 26  2009    August      59594
+## 27  2009  December      49948
+## 28  2009  February      41672
+## 29  2009   January      45535
+## 30  2009      July      66027
+## 31  2009      June      56701
+## 32  2009     March      49979
+## 33  2009       May      52502
+## 34  2009  November      40714
+## 35  2009   October      91728
+## 36  2009 September      43831
+## 37  2010     April      57437
+## 38  2010    August      63752
+## 39  2010  December      51400
+## 40  2010  February      42718
+## 41  2010   January      47630
+## 42  2010      July      74194
+## 43  2010      June      63489
+## 44  2010     March      56482
+## 45  2010       May      54989
+## 46  2010  November      48268
+## 47  2010   October      85828
+## 48  2010 September      45896
+## 49  2011     April      49773
+## 50  2011    August      57138
+## 51  2011  December      63606
+## 52  2011  February      46877
+## 53  2011   January      46039
+## 54  2011      July      62459
+## 55  2011      June      56670
+## 56  2011     March      51672
+## 57  2011       May      51460
+## 58  2011  November      45281
+## 59  2011   October      82202
+## 60  2011 September      45636
+## 61  2012     April      56133
+## 62  2012    August      74149
+## 63  2012  December      58057
+## 64  2012  February      50107
+## 65  2012   January      52880
+## 66  2012      July      78303
+## 67  2012      June      63396
+## 68  2012     March      55253
+## 69  2012       May      57863
+## 70  2012  November      47743
+## 71  2012   October      76578
+## 72  2012 September      44964
+## 73  2013     April      58195
+## 74  2013    August      64116
+## 75  2013  December      65567
+## 76  2013  February      53944
+## 77  2013   January      49599
+## 78  2013      July      74000
+## 79  2013      June      65944
+## 80  2013     March      58219
+## 81  2013       May      59283
+## 82  2013  November      41598
+## 83  2013   October      46464
+## 84  2013 September      54803
+## 85  2014     April      56605
+## 86  2014    August      55250
+## 87  2014  December      60652
+## 88  2014  February      50451
+## 89  2014   January      52623
+## 90  2014      July      72271
+## 91  2014      June      64836
+## 92  2014     March      58319
+## 93  2014       May      60673
+## 94  2014  November      39561
+## 95  2014   October      45413
+## 96  2014 September      41096
+## 97  2015     April      48972
+## 98  2015    August      54824
+## 99  2015  December      59854
+## 100 2015  February      48379
+## 101 2015   January      49004
+## 102 2015      July      67998
+## 103 2015      June      66177
+## 104 2015     March      52880
+## 105 2015       May      54682
+## 106 2015  November      42729
+## 107 2015   October      46167
+## 108 2015 September      38310
+## 109 2016     April      49703
+## 110 2016    August      59721
+## 111 2016  December      61443
+## 112 2016  February      51235
+## 113 2016   January      48483
+## 114 2016      July      73768
+## 115 2016      June      64368
+## 116 2016     March      56791
+## 117 2016       May      57088
+## 118 2016  November      46589
+## 119 2016   October      47565
+## 120 2016 September      46730
+## 121 2017     April      52725
+## 122 2017    August      64619
+## 123 2017  December      53938
+## 124 2017  February      47919
+## 125 2017   January      50930
+## 126 2017      July      73905
+## 127 2017      June      66530
+## 128 2017     March      55574
+## 129 2017       May      59468
+## 130 2017  November      47714
+## 131 2017   October      50260
+## 132 2017 September      44934
+## 133 2018     April      53847
+## 134 2018    August      56659
+## 135 2018  December      51576
+## 136 2018  February      53555
+## 137 2018   January      55304
+## 138 2018      July      71909
+## 139 2018      June      68197
+## 140 2018     March      62690
+## 141 2018       May      62101
+## 142 2018  November      44204
+## 143 2018   October      47337
+## 144 2018 September      42545
+## 145 2019     April      57002
+## 146 2019    August      61112
+## 147 2019  December      53720
+## 148 2019  February      48338
+## 149 2019   January      50699
+## 150 2019      July      75972
+## 151 2019      June      65920
+## 152 2019     March      63273
+## 153 2019       May      62585
+## 154 2019  November      42639
+## 155 2019   October      46634
+## 156 2019 September      38628
+## 157 2020  February      45300
+## 158 2020   January      53562
+## 159 2020     March      19121
+## 160 2021     April      18573
+## 161 2021    August      35112
+## 162 2021  December      35138
+## 163 2021  February       7279
+## 164 2021   January       3227
+## 165 2021      July      37624
+## 166 2021      June      29342
+## 167 2021     March      12966
+## 168 2021       May      27091
+## 169 2021  November      27500
+## 170 2021   October      24895
+## 171 2021 September      23094
+## 172 2022     April      43092
+## 173 2022    August      52999
+## 174 2022  December      42994
+## 175 2022  February      29331
+## 176 2022   January      27946
+## 177 2022      July      58760
+## 178 2022      June      47387
+## 179 2022     March      40041
+## 180 2022       May      40922
+## 181 2022  November      34869
+## 182 2022   October      38534
+## 183 2022 September      36890
+## 184 2023     April      43917
+## 185 2023    August      49849
+## 186 2023  December      44771
+## 187 2023  February      36627
+## 188 2023   January      39030
+## 189 2023      July      57916
+## 190 2023      June      51691
+## 191 2023     March      45255
+## 192 2023       May      41331
+## 193 2023  November      36105
+## 194 2023   October      40427
+## 195 2023 September      36844
+## 196 2024     April      44341
+## 197 2024    August      45777
+## 198 2024  December      44357
+## 199 2024  February      40650
+## 200 2024   January      37837
+## 201 2024      July      59607
+## 202 2024      June      49373
+## 203 2024     March      44858
+## 204 2024       May      40178
+## 205 2024  November      35248
+## 206 2024   October      39243
+## 207 2024 September      32967
+## 208 2025  February      34759
+## 209 2025   January      39384
+## 210 2025     March      44216
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tenant\_data }\OtherTok{\textless{}{-}} \FunctionTok{dbGetQuery}\NormalTok{(con, }\StringTok{"}
+\StringTok{SELECT * FROM tenantsales}
+\StringTok{where 1=1}
+\StringTok{  and \textasciigrave{}Net Sales\textasciigrave{} \textgreater{}0}
+\StringTok{  and \textasciigrave{}Net Sales\textasciigrave{} is not null}
+\StringTok{;}
+\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Prepare ticket\_data with a month{-}year column}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  ticket\_data}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(}\FunctionTok{paste}\NormalTok{(ticket\_data}\SpecialCharTok{$}\NormalTok{Year, ticket\_data}\SpecialCharTok{$}\NormalTok{Month, }\StringTok{"01"}\NormalTok{, }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{), }\AttributeTok{format =} \StringTok{"\%Y{-}\%B{-}\%d"}\NormalTok{)}
+\NormalTok{  ticket\_data}\SpecialCharTok{$}\NormalTok{month\_year }\OtherTok{\textless{}{-}} \FunctionTok{format}\NormalTok{(ticket\_data}\SpecialCharTok{$}\NormalTok{date, }\StringTok{"\%Y{-}\%m"}\NormalTok{)}
+\NormalTok{  ticket\_sum }\OtherTok{\textless{}{-}}\NormalTok{ ticket\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(month\_year) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_tickets =} \FunctionTok{sum}\NormalTok{(TicketSell, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{\}}
+
+\CommentTok{\# Function to calculate and plot correlation}
+\NormalTok{plot\_correlation }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(data1, data2, x\_var, y\_var, title, }\AttributeTok{group\_var =} \ConstantTok{NULL}\NormalTok{) \{}
+  \ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(data1) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(data2) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+    \CommentTok{\# Merge data by month\_year}
+\NormalTok{    merged\_data }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(data1, data2, }\AttributeTok{by =} \StringTok{"month\_year"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{FALSE}\NormalTok{)}
+    
+    \CommentTok{\# Calculate correlation}
+\NormalTok{    cor\_value }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(merged\_data[[x\_var]], merged\_data[[y\_var]], }\AttributeTok{use =} \StringTok{"complete.obs"}\NormalTok{, }\AttributeTok{method =} \StringTok{"pearson"}\NormalTok{)}
+    \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"\%s {-} Pearson Correlation: \%.3f}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, title, cor\_value))}
+    
+    \CommentTok{\# Create scatter plot}
+    \ControlFlowTok{if}\NormalTok{(}\FunctionTok{is.null}\NormalTok{(group\_var)) \{}
+\NormalTok{      p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(merged\_data, }\FunctionTok{aes\_string}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x\_var, }\AttributeTok{y =}\NormalTok{ y\_var)) }\SpecialCharTok{+}
+        \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+        \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+        \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =}\NormalTok{ title, }\AttributeTok{x =} \StringTok{"Ticket Sales"}\NormalTok{, }\AttributeTok{y =} \FunctionTok{gsub}\NormalTok{(}\StringTok{"total\_"}\NormalTok{, }\StringTok{""}\NormalTok{, y\_var)) }\SpecialCharTok{+}
+        \FunctionTok{stat\_cor}\NormalTok{(}\AttributeTok{method =} \StringTok{"pearson"}\NormalTok{, }\AttributeTok{label.x =} \FunctionTok{min}\NormalTok{(merged\_data[[x\_var]], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }
+                 \AttributeTok{label.y =} \FunctionTok{max}\NormalTok{(merged\_data[[y\_var]], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{+}
+        \FunctionTok{theme\_minimal}\NormalTok{()}
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+\NormalTok{      p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(merged\_data, }\FunctionTok{aes\_string}\NormalTok{(}\AttributeTok{x =}\NormalTok{ x\_var, }\AttributeTok{y =}\NormalTok{ y\_var, }\AttributeTok{color =}\NormalTok{ group\_var)) }\SpecialCharTok{+}
+        \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+        \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{) }\SpecialCharTok{+}
+        \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =}\NormalTok{ title, }\AttributeTok{x =} \StringTok{"Ticket Sales"}\NormalTok{, }\AttributeTok{y =} \FunctionTok{gsub}\NormalTok{(}\StringTok{"total\_"}\NormalTok{, }\StringTok{""}\NormalTok{, y\_var)) }\SpecialCharTok{+}
+        \FunctionTok{stat\_cor}\NormalTok{(}\AttributeTok{method =} \StringTok{"pearson"}\NormalTok{, }\FunctionTok{aes\_string}\NormalTok{(}\AttributeTok{color =}\NormalTok{ group\_var), }\AttributeTok{label.x =} \FunctionTok{min}\NormalTok{(merged\_data[[x\_var]], }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{+}
+        \FunctionTok{theme\_minimal}\NormalTok{()}
+\NormalTok{    \}}
+    \FunctionTok{print}\NormalTok{(p)}
+    \FunctionTok{Sys.sleep}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+    \FunctionTok{return}\NormalTok{(cor\_value)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"\%s {-} Insufficient data for correlation}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, title))}
+    \FunctionTok{return}\NormalTok{(}\ConstantTok{NA}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\CommentTok{\# 1. Ticket Sales vs Accommodation Choices (by Group)}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(accom\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  accom\_sum }\OtherTok{\textless{}{-}}\NormalTok{ accom\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_accom =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{rename}\NormalTok{(}\AttributeTok{month\_year =} \StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{  cor\_accom }\OtherTok{\textless{}{-}} \FunctionTok{plot\_correlation}\NormalTok{(ticket\_sum, accom\_sum, }\StringTok{"total\_tickets"}\NormalTok{, }\StringTok{"total\_accom"}\NormalTok{, }
+                               \StringTok{"1. Ticket Sales vs Accommodation Choices"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 1. Ticket Sales vs Accommodation Choices - Pearson Correlation: 0.555
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+## i Please use tidy evaluation idioms with `aes()`.
+## i See also `vignette("ggplot2-in-packages")` for more information.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 2. Ticket Sales vs Air Visitors (by Group)}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(air\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  air\_sum }\OtherTok{\textless{}{-}}\NormalTok{ air\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_air =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{rename}\NormalTok{(}\AttributeTok{month\_year =} \StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{  cor\_air }\OtherTok{\textless{}{-}} \FunctionTok{plot\_correlation}\NormalTok{(ticket\_sum, air\_sum, }\StringTok{"total\_tickets"}\NormalTok{, }\StringTok{"total\_air"}\NormalTok{, }
+                             \StringTok{"2. Ticket Sales vs Air Visitors"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 2. Ticket Sales vs Air Visitors - Pearson Correlation: 0.417
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-3-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 3. Ticket Sales vs Travel Method (by Group)}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(travel\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  travel\_sum }\OtherTok{\textless{}{-}}\NormalTok{ travel\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_travel =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{rename}\NormalTok{(}\AttributeTok{month\_year =} \StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{  cor\_travel }\OtherTok{\textless{}{-}} \FunctionTok{plot\_correlation}\NormalTok{(ticket\_sum, travel\_sum, }\StringTok{"total\_tickets"}\NormalTok{, }\StringTok{"total\_travel"}\NormalTok{, }
+                                \StringTok{"3. Ticket Sales vs Travel Method"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 3. Ticket Sales vs Travel Method - Pearson Correlation: 0.562
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-3-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 4. Ticket Sales vs Purpose of Trip (by Group)}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(purpose\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  purpose\_sum }\OtherTok{\textless{}{-}}\NormalTok{ purpose\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_purpose =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{rename}\NormalTok{(}\AttributeTok{month\_year =} \StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{  cor\_purpose }\OtherTok{\textless{}{-}} \FunctionTok{plot\_correlation}\NormalTok{(ticket\_sum, purpose\_sum, }\StringTok{"total\_tickets"}\NormalTok{, }\StringTok{"total\_purpose"}\NormalTok{, }
+                                 \StringTok{"4. Ticket Sales vs Purpose of Trip"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 4. Ticket Sales vs Purpose of Trip - Pearson Correlation: 0.617
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-3-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 5. Ticket Sales vs Tenant Sales}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(tenant\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  tenant\_sum }\OtherTok{\textless{}{-}}\NormalTok{ tenant\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{month\_year =} \FunctionTok{format}\NormalTok{(}\FunctionTok{as.Date}\NormalTok{(Date), }\StringTok{"\%Y{-}\%m"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(month\_year) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_sales =} \FunctionTok{sum}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Net Sales}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{  cor\_tenant }\OtherTok{\textless{}{-}} \FunctionTok{plot\_correlation}\NormalTok{(ticket\_sum, tenant\_sum, }\StringTok{"total\_tickets"}\NormalTok{, }\StringTok{"total\_sales"}\NormalTok{, }
+                                \StringTok{"5. Ticket Sales vs Tenant Sales"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 5. Ticket Sales vs Tenant Sales - Pearson Correlation: 0.783
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-3-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 6. Ticket Sales vs Accommodation Choices by Indicator}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(accom\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  accom\_by\_ind }\OtherTok{\textless{}{-}}\NormalTok{ accom\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, Indicator) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_accom =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{rename}\NormalTok{(}\AttributeTok{month\_year =} \StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{  cor\_accom\_ind }\OtherTok{\textless{}{-}} \FunctionTok{plot\_correlation}\NormalTok{(ticket\_sum, accom\_by\_ind, }\StringTok{"total\_tickets"}\NormalTok{, }\StringTok{"total\_accom"}\NormalTok{, }
+                                   \StringTok{"6. Ticket Sales vs Accommodation Choices by Indicator"}\NormalTok{, }\StringTok{"Indicator"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'YYYY-MM'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{verbatim}
+## 6. Ticket Sales vs Accommodation Choices by Indicator - Pearson Correlation: -0.001
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-3-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 7. Ticket Sales vs Air Visitors by Indicator}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(air\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  air\_by\_ind }\OtherTok{\textless{}{-}}\NormalTok{ air\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, Indicator) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_air =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{rename}\NormalTok{(}\AttributeTok{month\_year =} \StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{  cor\_air\_ind }\OtherTok{\textless{}{-}} \FunctionTok{plot\_correlation}\NormalTok{(ticket\_sum, air\_by\_ind, }\StringTok{"total\_tickets"}\NormalTok{, }\StringTok{"total\_air"}\NormalTok{, }
+                                 \StringTok{"7. Ticket Sales vs Air Visitors by Indicator"}\NormalTok{, }\StringTok{"Indicator"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'YYYY-MM'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{verbatim}
+## 7. Ticket Sales vs Air Visitors by Indicator - Pearson Correlation: 0.025
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-3-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 8. Ticket Sales vs Travel Method by Indicator}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(travel\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  travel\_by\_ind }\OtherTok{\textless{}{-}}\NormalTok{ travel\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, Indicator) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_travel =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{rename}\NormalTok{(}\AttributeTok{month\_year =} \StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{  cor\_travel\_ind }\OtherTok{\textless{}{-}} \FunctionTok{plot\_correlation}\NormalTok{(ticket\_sum, travel\_by\_ind, }\StringTok{"total\_tickets"}\NormalTok{, }\StringTok{"total\_travel"}\NormalTok{, }
+                                    \StringTok{"8. Ticket Sales vs Travel Method by Indicator"}\NormalTok{, }\StringTok{"Indicator"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'YYYY-MM'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{verbatim}
+## 8. Ticket Sales vs Travel Method by Indicator - Pearson Correlation: 0.019
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-3-8.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 9. Ticket Sales vs Purpose of Trip by Indicator}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(purpose\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  purpose\_by\_ind }\OtherTok{\textless{}{-}}\NormalTok{ purpose\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, Indicator) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_purpose =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{rename}\NormalTok{(}\AttributeTok{month\_year =} \StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{  cor\_purpose\_ind }\OtherTok{\textless{}{-}} \FunctionTok{plot\_correlation}\NormalTok{(ticket\_sum, purpose\_by\_ind, }\StringTok{"total\_tickets"}\NormalTok{, }\StringTok{"total\_purpose"}\NormalTok{, }
+                                     \StringTok{"9. Ticket Sales vs Purpose of Trip by Indicator"}\NormalTok{, }\StringTok{"Indicator"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'YYYY-MM'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{verbatim}
+## 9. Ticket Sales vs Purpose of Trip by Indicator - Pearson Correlation: 0.007
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-3-9.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Summary of correlation values}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Summary of Pearson Correlation Coefficients:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Summary of Pearson Correlation Coefficients:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"1. Ticket Sales vs Accommodation Choices: \%.3f}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, cor\_accom))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 1. Ticket Sales vs Accommodation Choices: 0.555
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"2. Ticket Sales vs Air Visitors: \%.3f}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, cor\_air))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 2. Ticket Sales vs Air Visitors: 0.417
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"3. Ticket Sales vs Travel Method: \%.3f}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, cor\_travel))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 3. Ticket Sales vs Travel Method: 0.562
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"4. Ticket Sales vs Purpose of Trip: \%.3f}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, cor\_purpose))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 4. Ticket Sales vs Purpose of Trip: 0.617
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"5. Ticket Sales vs Tenant Sales: \%.3f}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, cor\_tenant))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 5. Ticket Sales vs Tenant Sales: 0.783
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"6. Ticket Sales vs Accommodation Choices by Indicator: \%.3f (avg across Indicators)}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, cor\_accom\_ind))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 6. Ticket Sales vs Accommodation Choices by Indicator: -0.001 (avg across Indicators)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"7. Ticket Sales vs Air Visitors by Indicator: \%.3f (avg across Indicators)}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, cor\_air\_ind))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 7. Ticket Sales vs Air Visitors by Indicator: 0.025 (avg across Indicators)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"8. Ticket Sales vs Travel Method by Indicator: \%.3f (avg across Indicators)}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, cor\_travel\_ind))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 8. Ticket Sales vs Travel Method by Indicator: 0.019 (avg across Indicators)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"9. Ticket Sales vs Purpose of Trip by Indicator: \%.3f (avg across Indicators)}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, cor\_purpose\_ind))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 9. Ticket Sales vs Purpose of Trip by Indicator: 0.007 (avg across Indicators)
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Prepare ticket\_data with a month{-}year column}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  ticket\_data}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(}\FunctionTok{paste}\NormalTok{(ticket\_data}\SpecialCharTok{$}\NormalTok{Year, ticket\_data}\SpecialCharTok{$}\NormalTok{Month, }\StringTok{"01"}\NormalTok{, }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{), }\AttributeTok{format =} \StringTok{"\%Y{-}\%B{-}\%d"}\NormalTok{)}
+\NormalTok{  ticket\_data}\SpecialCharTok{$}\NormalTok{month\_year }\OtherTok{\textless{}{-}} \FunctionTok{format}\NormalTok{(ticket\_data}\SpecialCharTok{$}\NormalTok{date, }\StringTok{"\%Y{-}\%m"}\NormalTok{)}
+\NormalTok{  ticket\_sum }\OtherTok{\textless{}{-}}\NormalTok{ ticket\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(month\_year) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_tickets =} \FunctionTok{sum}\NormalTok{(TicketSell, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{\}}
+
+\CommentTok{\# Prepare accommodation data and get unique Indicators}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(accom\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  accom\_data}\SpecialCharTok{$}\NormalTok{month\_year }\OtherTok{\textless{}{-}}\NormalTok{ accom\_data}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}
+\NormalTok{  unique\_indicators }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(accom\_data}\SpecialCharTok{$}\NormalTok{Indicator)}
+\NormalTok{  num\_indicators }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(unique\_indicators)}
+  \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Number of unique Indicators found: \%d}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, num\_indicators))}
+  
+  \CommentTok{\# Limit to 18 or fewer indicators}
+  \ControlFlowTok{if}\NormalTok{(num\_indicators }\SpecialCharTok{\textgreater{}} \DecValTok{18}\NormalTok{) \{}
+\NormalTok{    unique\_indicators }\OtherTok{\textless{}{-}}\NormalTok{ unique\_indicators[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{18}\NormalTok{]}
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"Limiting to first 18 Indicators.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"No data in htaaccommodationchoices table.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  unique\_indicators }\OtherTok{\textless{}{-}} \FunctionTok{character}\NormalTok{(}\DecValTok{0}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Number of unique Indicators found: 18
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Function to plot correlation for a specific Indicator}
+\NormalTok{plot\_correlation\_by\_indicator }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(ticket\_data, accom\_data, indicator, plot\_num) \{}
+  \CommentTok{\# Filter accommodation data for the specific Indicator}
+\NormalTok{  accom\_subset }\OtherTok{\textless{}{-}}\NormalTok{ accom\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{filter}\NormalTok{(Indicator }\SpecialCharTok{==}\NormalTok{ indicator) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(month\_year) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_accom =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  
+  \CommentTok{\# Merge with ticket data}
+\NormalTok{  merged\_data }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(ticket\_data, accom\_subset, }\AttributeTok{by =} \StringTok{"month\_year"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{FALSE}\NormalTok{)}
+  
+  \ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(merged\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{1}\NormalTok{) \{  }\CommentTok{\# Need at least 2 points for correlation}
+    \CommentTok{\# Calculate correlation}
+\NormalTok{    cor\_value }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(merged\_data}\SpecialCharTok{$}\NormalTok{total\_tickets, merged\_data}\SpecialCharTok{$}\NormalTok{total\_accom, }\AttributeTok{use =} \StringTok{"complete.obs"}\NormalTok{, }\AttributeTok{method =} \StringTok{"pearson"}\NormalTok{)}
+    \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d {-} Ticket Sales vs \%s {-} Pearson Correlation: \%.3f}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, plot\_num, indicator, cor\_value))}
+    
+    \CommentTok{\# Create scatter plot}
+\NormalTok{    p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(merged\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ total\_tickets, }\AttributeTok{y =}\NormalTok{ total\_accom)) }\SpecialCharTok{+}
+      \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+      \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+      \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d: Ticket Sales vs Accommodation (\%s)"}\NormalTok{, plot\_num, indicator),}
+           \AttributeTok{x =} \StringTok{"Ticket Sales"}\NormalTok{, }\AttributeTok{y =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Accommodation Value ("}\NormalTok{, indicator, }\StringTok{")"}\NormalTok{)) }\SpecialCharTok{+}
+      \FunctionTok{stat\_cor}\NormalTok{(}\AttributeTok{method =} \StringTok{"pearson"}\NormalTok{, }\AttributeTok{label.x =} \FunctionTok{min}\NormalTok{(merged\_data}\SpecialCharTok{$}\NormalTok{total\_tickets, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }
+               \AttributeTok{label.y =} \FunctionTok{max}\NormalTok{(merged\_data}\SpecialCharTok{$}\NormalTok{total\_accom, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{+}
+      \FunctionTok{theme\_minimal}\NormalTok{()}
+    \FunctionTok{print}\NormalTok{(p)}
+    \FunctionTok{Sys.sleep}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+    \FunctionTok{return}\NormalTok{(cor\_value)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d {-} Ticket Sales vs \%s {-} Insufficient data for correlation}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, plot\_num, indicator))}
+    \FunctionTok{return}\NormalTok{(}\ConstantTok{NA}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\CommentTok{\# Generate up to 18 correlation plots}
+\NormalTok{correlation\_values }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\StringTok{"numeric"}\NormalTok{, }\FunctionTok{min}\NormalTok{(}\DecValTok{18}\NormalTok{, }\FunctionTok{length}\NormalTok{(unique\_indicators)))}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(accom\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \FunctionTok{seq\_along}\NormalTok{(unique\_indicators)) \{}
+\NormalTok{    indicator }\OtherTok{\textless{}{-}}\NormalTok{ unique\_indicators[i]}
+\NormalTok{    correlation\_values[i] }\OtherTok{\textless{}{-}} \FunctionTok{plot\_correlation\_by\_indicator}\NormalTok{(ticket\_sum, accom\_data, indicator, i)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Plot 1 - Ticket Sales vs LOS on Oahu - Pearson Correlation: -0.572
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\begin{verbatim}
+## Plot 2 - Ticket Sales vs Accom: B&B (%) - Pearson Correlation: 0.199
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-2.pdf}
+
+\begin{verbatim}
+## Plot 3 - Ticket Sales vs Accom: Camp site/Beach (%) - Pearson Correlation: -0.009
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-3.pdf}
+
+\begin{verbatim}
+## Plot 4 - Ticket Sales vs Accom: Condo (%) - Pearson Correlation: 0.154
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-4.pdf}
+
+\begin{verbatim}
+## Plot 5 - Ticket Sales vs Accom: Condo only (%) - Pearson Correlation: -0.215
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-5.pdf}
+
+\begin{verbatim}
+## Plot 6 - Ticket Sales vs Accom: Cruise ship (%) - Pearson Correlation: 0.151
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-6.pdf}
+
+\begin{verbatim}
+## Plot 7 - Ticket Sales vs Accom: Friends/Relatives (%) - Pearson Correlation: -0.635
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-7.pdf}
+
+\begin{verbatim}
+## Plot 8 - Ticket Sales vs Accom: Hostel (%) - Pearson Correlation: 0.260
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-8.pdf}
+
+\begin{verbatim}
+## Plot 9 - Ticket Sales vs Accom: Hotel (%) - Pearson Correlation: 0.574
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-9.pdf}
+
+\begin{verbatim}
+## Plot 10 - Ticket Sales vs Accom: Hotel only (%) - Pearson Correlation: 0.461
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-10.pdf}
+
+\begin{verbatim}
+## Plot 11 - Ticket Sales vs Accom: Private room in private home (%) - Pearson Correlation: 0.354
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-11.pdf}
+
+\begin{verbatim}
+## Plot 12 - Ticket Sales vs Accom: Rental house (%) - Pearson Correlation: -0.253
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-12.pdf}
+
+\begin{verbatim}
+## Plot 13 - Ticket Sales vs Accom: Shared room in private home (%) - Pearson Correlation: 0.187
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-13.pdf}
+
+\begin{verbatim}
+## Plot 14 - Ticket Sales vs Accom: Timeshare (%) - Pearson Correlation: -0.376
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-14.pdf}
+
+\begin{verbatim}
+## Plot 15 - Ticket Sales vs Accom: Timeshare only (%) - Pearson Correlation: -0.582
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-15.pdf}
+
+\begin{verbatim}
+## Warning in cor(merged_data$total_tickets, merged_data$total_accom, use =
+## "complete.obs", : the standard deviation is zero
+\end{verbatim}
+
+\begin{verbatim}
+## Plot 16 - Ticket Sales vs ISL visit: Oahu (%) - Pearson Correlation: NA
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-16.pdf}
+
+\begin{verbatim}
+## Plot 17 - Ticket Sales vs ISL visit: Oahu & Neighbor ISL (%) - Pearson Correlation: 0.779
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-17.pdf}
+
+\begin{verbatim}
+## Plot 18 - Ticket Sales vs ISL visit: Oahu only (%) - Pearson Correlation: -0.779
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-4-18.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Pad with NA if fewer than 18 Indicators}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{length}\NormalTok{(unique\_indicators) }\SpecialCharTok{\textless{}} \DecValTok{18}\NormalTok{) \{}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ (}\FunctionTok{length}\NormalTok{(unique\_indicators) }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\DecValTok{18}\NormalTok{) \{}
+    \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d {-} No additional Indicator available}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, i))}
+\NormalTok{    correlation\_values[i] }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\CommentTok{\# Summary of correlation values}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Summary of Pearson Correlation Coefficients:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Summary of Pearson Correlation Coefficients:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{18}\NormalTok{) \{}
+  \ControlFlowTok{if}\NormalTok{(i }\SpecialCharTok{\textless{}=} \FunctionTok{length}\NormalTok{(unique\_indicators)) \{}
+\NormalTok{    indicator }\OtherTok{\textless{}{-}}\NormalTok{ unique\_indicators[i]}
+\NormalTok{    cor\_val }\OtherTok{\textless{}{-}}\NormalTok{ correlation\_values[i]}
+    \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(cor\_val)) \{}
+      \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d {-} Ticket Sales vs \%s: \%.3f}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, i, indicator, cor\_val))}
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+      \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d {-} Ticket Sales vs \%s: Insufficient data}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, i, indicator))}
+\NormalTok{    \}}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d {-} No Indicator available: NA}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, i))}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Plot 1 - Ticket Sales vs LOS on Oahu: -0.572
+## Plot 2 - Ticket Sales vs Accom: B&B (%): 0.199
+## Plot 3 - Ticket Sales vs Accom: Camp site/Beach (%): -0.009
+## Plot 4 - Ticket Sales vs Accom: Condo (%): 0.154
+## Plot 5 - Ticket Sales vs Accom: Condo only (%): -0.215
+## Plot 6 - Ticket Sales vs Accom: Cruise ship (%): 0.151
+## Plot 7 - Ticket Sales vs Accom: Friends/Relatives (%): -0.635
+## Plot 8 - Ticket Sales vs Accom: Hostel (%): 0.260
+## Plot 9 - Ticket Sales vs Accom: Hotel (%): 0.574
+## Plot 10 - Ticket Sales vs Accom: Hotel only (%): 0.461
+## Plot 11 - Ticket Sales vs Accom: Private room in private home (%): 0.354
+## Plot 12 - Ticket Sales vs Accom: Rental house (%): -0.253
+## Plot 13 - Ticket Sales vs Accom: Shared room in private home (%): 0.187
+## Plot 14 - Ticket Sales vs Accom: Timeshare (%): -0.376
+## Plot 15 - Ticket Sales vs Accom: Timeshare only (%): -0.582
+## Plot 16 - Ticket Sales vs ISL visit: Oahu (%): Insufficient data
+## Plot 17 - Ticket Sales vs ISL visit: Oahu & Neighbor ISL (%): 0.779
+## Plot 18 - Ticket Sales vs ISL visit: Oahu only (%): -0.779
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Prepare ticket\_data with a month{-}year column}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  ticket\_data}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(}\FunctionTok{paste}\NormalTok{(ticket\_data}\SpecialCharTok{$}\NormalTok{Year, ticket\_data}\SpecialCharTok{$}\NormalTok{Month, }\StringTok{"01"}\NormalTok{, }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{), }\AttributeTok{format =} \StringTok{"\%Y{-}\%B{-}\%d"}\NormalTok{)}
+\NormalTok{  ticket\_data}\SpecialCharTok{$}\NormalTok{month\_year }\OtherTok{\textless{}{-}} \FunctionTok{format}\NormalTok{(ticket\_data}\SpecialCharTok{$}\NormalTok{date, }\StringTok{"\%Y{-}\%m"}\NormalTok{)}
+\NormalTok{  ticket\_sum }\OtherTok{\textless{}{-}}\NormalTok{ ticket\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(month\_year) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_tickets =} \FunctionTok{sum}\NormalTok{(TicketSell, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{\}}
+
+\CommentTok{\# Prepare purpose of trip data and get unique Indicators}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(purpose\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  purpose\_data}\SpecialCharTok{$}\NormalTok{month\_year }\OtherTok{\textless{}{-}}\NormalTok{ purpose\_data}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}
+\NormalTok{  unique\_indicators }\OtherTok{\textless{}{-}} \FunctionTok{unique}\NormalTok{(purpose\_data}\SpecialCharTok{$}\NormalTok{Indicator)}
+\NormalTok{  num\_indicators }\OtherTok{\textless{}{-}} \FunctionTok{length}\NormalTok{(unique\_indicators)}
+  \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Number of unique Indicators found: \%d}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, num\_indicators))}
+  
+  \CommentTok{\# Limit to 15 or fewer indicators}
+  \ControlFlowTok{if}\NormalTok{(num\_indicators }\SpecialCharTok{\textgreater{}} \DecValTok{15}\NormalTok{) \{}
+\NormalTok{    unique\_indicators }\OtherTok{\textless{}{-}}\NormalTok{ unique\_indicators[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{15}\NormalTok{]}
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"Limiting to first 15 Indicators.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"No data in htapurposeoftrip table.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  unique\_indicators }\OtherTok{\textless{}{-}} \FunctionTok{character}\NormalTok{(}\DecValTok{0}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Number of unique Indicators found: 15
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Function to plot correlation for a specific Indicator}
+\NormalTok{plot\_correlation\_by\_indicator }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(ticket\_data, purpose\_data, indicator, plot\_num) \{}
+  \CommentTok{\# Filter purpose data for the specific Indicator}
+\NormalTok{  purpose\_subset }\OtherTok{\textless{}{-}}\NormalTok{ purpose\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{filter}\NormalTok{(Indicator }\SpecialCharTok{==}\NormalTok{ indicator) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(month\_year) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total\_purpose =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  
+  \CommentTok{\# Merge with ticket data}
+\NormalTok{  merged\_data }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(ticket\_data, purpose\_subset, }\AttributeTok{by =} \StringTok{"month\_year"}\NormalTok{, }\AttributeTok{all =} \ConstantTok{FALSE}\NormalTok{)}
+  
+  \ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(merged\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{1}\NormalTok{) \{  }\CommentTok{\# Need at least 2 points for correlation}
+    \CommentTok{\# Calculate correlation}
+\NormalTok{    cor\_value }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(merged\_data}\SpecialCharTok{$}\NormalTok{total\_tickets, merged\_data}\SpecialCharTok{$}\NormalTok{total\_purpose, }\AttributeTok{use =} \StringTok{"complete.obs"}\NormalTok{, }\AttributeTok{method =} \StringTok{"pearson"}\NormalTok{)}
+    \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d {-} Ticket Sales vs \%s {-} Pearson Correlation: \%.3f}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, plot\_num, indicator, cor\_value))}
+    
+    \CommentTok{\# Create scatter plot}
+\NormalTok{    p }\OtherTok{\textless{}{-}} \FunctionTok{ggplot}\NormalTok{(merged\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ total\_tickets, }\AttributeTok{y =}\NormalTok{ total\_purpose)) }\SpecialCharTok{+}
+      \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+      \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+      \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d: Ticket Sales vs Purpose of Trip (\%s)"}\NormalTok{, plot\_num, indicator),}
+           \AttributeTok{x =} \StringTok{"Ticket Sales"}\NormalTok{, }\AttributeTok{y =} \FunctionTok{paste}\NormalTok{(}\StringTok{"Purpose Value ("}\NormalTok{, indicator, }\StringTok{")"}\NormalTok{)) }\SpecialCharTok{+}
+      \FunctionTok{stat\_cor}\NormalTok{(}\AttributeTok{method =} \StringTok{"pearson"}\NormalTok{, }\AttributeTok{label.x =} \FunctionTok{min}\NormalTok{(merged\_data}\SpecialCharTok{$}\NormalTok{total\_tickets, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }
+               \AttributeTok{label.y =} \FunctionTok{max}\NormalTok{(merged\_data}\SpecialCharTok{$}\NormalTok{total\_purpose, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)) }\SpecialCharTok{+}
+      \FunctionTok{theme\_minimal}\NormalTok{()}
+    \FunctionTok{print}\NormalTok{(p)}
+    \FunctionTok{Sys.sleep}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+    \FunctionTok{return}\NormalTok{(cor\_value)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d {-} Ticket Sales vs \%s {-} Insufficient data for correlation}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, plot\_num, indicator))}
+    \FunctionTok{return}\NormalTok{(}\ConstantTok{NA}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\CommentTok{\# Generate up to 15 correlation plots}
+\NormalTok{correlation\_values }\OtherTok{\textless{}{-}} \FunctionTok{vector}\NormalTok{(}\StringTok{"numeric"}\NormalTok{, }\FunctionTok{min}\NormalTok{(}\DecValTok{15}\NormalTok{, }\FunctionTok{length}\NormalTok{(unique\_indicators)))}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(purpose\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \FunctionTok{seq\_along}\NormalTok{(unique\_indicators)) \{}
+\NormalTok{    indicator }\OtherTok{\textless{}{-}}\NormalTok{ unique\_indicators[i]}
+\NormalTok{    correlation\_values[i] }\OtherTok{\textless{}{-}} \FunctionTok{plot\_correlation\_by\_indicator}\NormalTok{(ticket\_sum, purpose\_data, indicator, i)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Plot 1 - Ticket Sales vs Purpose: Attend school (%) - Pearson Correlation: 0.050
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+\begin{verbatim}
+## Plot 2 - Ticket Sales vs Purpose: Conventions (%) - Pearson Correlation: 0.289
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-2.pdf}
+
+\begin{verbatim}
+## Plot 3 - Ticket Sales vs Purpose: Corporate meetings (%) - Pearson Correlation: 0.049
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-3.pdf}
+
+\begin{verbatim}
+## Plot 4 - Ticket Sales vs Purpose: Get married (%) - Pearson Correlation: 0.367
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-4.pdf}
+
+\begin{verbatim}
+## Plot 5 - Ticket Sales vs Purpose: Govt/Military (%) - Pearson Correlation: -0.286
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-5.pdf}
+
+\begin{verbatim}
+## Plot 6 - Ticket Sales vs Purpose: Honeymoon (%) - Pearson Correlation: 0.364
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-6.pdf}
+
+\begin{verbatim}
+## Plot 7 - Ticket Sales vs Purpose: Honeymoon/Get married (%) - Pearson Correlation: 0.360
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-7.pdf}
+
+\begin{verbatim}
+## Plot 8 - Ticket Sales vs Purpose: Incentive (%) - Pearson Correlation: 0.478
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-8.pdf}
+
+\begin{verbatim}
+## Plot 9 - Ticket Sales vs Purpose: MCI-net (%) - Pearson Correlation: 0.400
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-9.pdf}
+
+\begin{verbatim}
+## Plot 10 - Ticket Sales vs Purpose: Other business (%) - Pearson Correlation: -0.334
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-10.pdf}
+
+\begin{verbatim}
+## Plot 11 - Ticket Sales vs Purpose: Other purpose(%) - Pearson Correlation: 0.438
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-11.pdf}
+
+\begin{verbatim}
+## Plot 12 - Ticket Sales vs Purpose: Pleasure-net (%) - Pearson Correlation: 0.409
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-12.pdf}
+
+\begin{verbatim}
+## Plot 13 - Ticket Sales vs Purpose: Sport events (%) - Pearson Correlation: 0.092
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-13.pdf}
+
+\begin{verbatim}
+## Plot 14 - Ticket Sales vs Purpose: Vacation (%) - Pearson Correlation: 0.010
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-14.pdf}
+
+\begin{verbatim}
+## Plot 15 - Ticket Sales vs Purpose: Visit Friends/Relative (%) - Pearson Correlation: -0.695
+\end{verbatim}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-5-15.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Pad with NA if fewer than 15 Indicators}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{length}\NormalTok{(unique\_indicators) }\SpecialCharTok{\textless{}} \DecValTok{15}\NormalTok{) \{}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ (}\FunctionTok{length}\NormalTok{(unique\_indicators) }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\DecValTok{15}\NormalTok{) \{}
+    \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d {-} No additional Indicator available}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, i))}
+\NormalTok{    correlation\_values[i] }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\CommentTok{\# Summary of correlation values}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{Summary of Pearson Correlation Coefficients:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Summary of Pearson Correlation Coefficients:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\DecValTok{15}\NormalTok{) \{}
+  \ControlFlowTok{if}\NormalTok{(i }\SpecialCharTok{\textless{}=} \FunctionTok{length}\NormalTok{(unique\_indicators)) \{}
+\NormalTok{    indicator }\OtherTok{\textless{}{-}}\NormalTok{ unique\_indicators[i]}
+\NormalTok{    cor\_val }\OtherTok{\textless{}{-}}\NormalTok{ correlation\_values[i]}
+    \ControlFlowTok{if}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(cor\_val)) \{}
+      \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d {-} Ticket Sales vs \%s: \%.3f}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, i, indicator, cor\_val))}
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{ \{}
+      \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d {-} Ticket Sales vs \%s: Insufficient data}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, i, indicator))}
+\NormalTok{    \}}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"Plot \%d {-} No Indicator available: NA}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, i))}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Plot 1 - Ticket Sales vs Purpose: Attend school (%): 0.050
+## Plot 2 - Ticket Sales vs Purpose: Conventions (%): 0.289
+## Plot 3 - Ticket Sales vs Purpose: Corporate meetings (%): 0.049
+## Plot 4 - Ticket Sales vs Purpose: Get married (%): 0.367
+## Plot 5 - Ticket Sales vs Purpose: Govt/Military (%): -0.286
+## Plot 6 - Ticket Sales vs Purpose: Honeymoon (%): 0.364
+## Plot 7 - Ticket Sales vs Purpose: Honeymoon/Get married (%): 0.360
+## Plot 8 - Ticket Sales vs Purpose: Incentive (%): 0.478
+## Plot 9 - Ticket Sales vs Purpose: MCI-net (%): 0.400
+## Plot 10 - Ticket Sales vs Purpose: Other business (%): -0.334
+## Plot 11 - Ticket Sales vs Purpose: Other purpose(%): 0.438
+## Plot 12 - Ticket Sales vs Purpose: Pleasure-net (%): 0.409
+## Plot 13 - Ticket Sales vs Purpose: Sport events (%): 0.092
+## Plot 14 - Ticket Sales vs Purpose: Vacation (%): 0.010
+## Plot 15 - Ticket Sales vs Purpose: Visit Friends/Relative (%): -0.695
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1. Accommodation Choices Time Series}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(accom\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(accom\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{as.Date}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{"{-}01"}\NormalTok{)), }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{color =}\NormalTok{ Group)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"1. Accommodation Choices Over Time"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Date"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Value"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-6-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 2. Visitors by Air Bar Plot}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(air\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(air\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Indicator, }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ Group)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"2. Visitors by Air by Indicator"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 3. Method of Travel Pie Chart}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(travel\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  travel\_sum }\OtherTok{\textless{}{-}}\NormalTok{ travel\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Indicator) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(travel\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Indicator)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"3. Distribution of Travel Methods"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1. Accommodation Choices by Group}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(accom\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  accom\_sum }\OtherTok{\textless{}{-}}\NormalTok{ accom\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Group) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(accom\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Group)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"1. Distribution of Accommodation Choices by Group"}\NormalTok{)}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 2. Accommodation Choices by Indicator}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(accom\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  accom\_sum }\OtherTok{\textless{}{-}}\NormalTok{ accom\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Indicator) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(accom\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Indicator)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"2. Distribution of Accommodation Choices by Indicator"}\NormalTok{)}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 3. Accommodation Choices by Units}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(accom\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  accom\_sum }\OtherTok{\textless{}{-}}\NormalTok{ accom\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Units) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(accom\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Units)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"3. Distribution of Accommodation Choices by Units"}\NormalTok{)}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 4. Air Visitors by Group}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(air\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  air\_sum }\OtherTok{\textless{}{-}}\NormalTok{ air\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Group) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(air\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Group)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"4. Distribution of Air Visitors by Group"}\NormalTok{)}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 5. Air Visitors by Indicator}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(air\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  air\_sum }\OtherTok{\textless{}{-}}\NormalTok{ air\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Indicator) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(air\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Indicator)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"5. Distribution of Air Visitors by Indicator"}\NormalTok{)}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 7. Travel Method by Group}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(travel\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  travel\_sum }\OtherTok{\textless{}{-}}\NormalTok{ travel\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Group) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(travel\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Group)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"7. Distribution of Travel Methods by Group"}\NormalTok{)}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 8. Travel Method by Indicator}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(travel\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  travel\_sum }\OtherTok{\textless{}{-}}\NormalTok{ travel\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Indicator) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(travel\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Indicator)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"8. Distribution of Travel Methods by Indicator"}\NormalTok{)}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-8.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 10. Purpose of Trip by Group}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(purpose\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  purpose\_sum }\OtherTok{\textless{}{-}}\NormalTok{ purpose\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Group) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(purpose\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Group)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"10. Distribution of Purpose of Trip by Group"}\NormalTok{)}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-9.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 11. Purpose of Trip by Indicator}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(purpose\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  purpose\_sum }\OtherTok{\textless{}{-}}\NormalTok{ purpose\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Indicator) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(purpose\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Indicator)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"11. Distribution of Purpose of Trip by Indicator"}\NormalTok{)}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-10.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 13. Ticket Sales by Year}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  ticket\_sum }\OtherTok{\textless{}{-}}\NormalTok{ ticket\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Year) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(TicketSell, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(ticket\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =} \FunctionTok{as.factor}\NormalTok{(Year))) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"13. Distribution of Ticket Sales by Year"}\NormalTok{)}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-11.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 14. Ticket Sales by Month}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  ticket\_sum }\OtherTok{\textless{}{-}}\NormalTok{ ticket\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Month) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(TicketSell, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(ticket\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Month)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"14. Distribution of Ticket Sales by Month"}\NormalTok{)}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-12.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 17. Air Visitors by Indicator (Latest Year)}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(air\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  latest\_year }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{substr}\NormalTok{(air\_data}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{))}
+\NormalTok{  air\_sum }\OtherTok{\textless{}{-}}\NormalTok{ air\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{filter}\NormalTok{(}\FunctionTok{substr}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{) }\SpecialCharTok{==}\NormalTok{ latest\_year) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(Indicator) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(air\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Indicator)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \FunctionTok{paste}\NormalTok{(}\StringTok{"17. Air Visitors by Indicator ("}\NormalTok{, latest\_year, }\StringTok{")"}\NormalTok{))}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-13.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 19. Purpose of Trip by Indicator (Latest Year)}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(purpose\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  latest\_year }\OtherTok{\textless{}{-}} \FunctionTok{max}\NormalTok{(}\FunctionTok{substr}\NormalTok{(purpose\_data}\SpecialCharTok{$}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{))}
+\NormalTok{  purpose\_sum }\OtherTok{\textless{}{-}}\NormalTok{ purpose\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{filter}\NormalTok{(}\FunctionTok{substr}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{) }\SpecialCharTok{==}\NormalTok{ latest\_year) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(Indicator) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(value, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(purpose\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Indicator)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \FunctionTok{paste}\NormalTok{(}\StringTok{"19. Purpose of Trip by Indicator ("}\NormalTok{, latest\_year, }\StringTok{")"}\NormalTok{))}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-14.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 20. Tenant Sales by Year}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(tenant\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  tenant\_sum }\OtherTok{\textless{}{-}}\NormalTok{ tenant\_data }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Year =} \FunctionTok{substr}\NormalTok{(Date, }\DecValTok{1}\NormalTok{, }\DecValTok{4}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{group\_by}\NormalTok{(Year) }\SpecialCharTok{\%\textgreater{}\%} 
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{total =} \FunctionTok{sum}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{Net Sales}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(tenant\_sum, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{""}\NormalTok{, }\AttributeTok{y =}\NormalTok{ total, }\AttributeTok{fill =}\NormalTok{ Year)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{coord\_polar}\NormalTok{(}\StringTok{"y"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"20. Distribution of Tenant Sales by Year"}\NormalTok{)}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-8-15.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 1. Accommodation Choices by Group Over Time}
+\CommentTok{\# Business Value: Understand which accommodation types drive demand to optimize inventory or partnerships.}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(accom\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(accom\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{as.Date}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{"{-}01"}\NormalTok{)), }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ Group)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_area}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"1. Accommodation Choices by Group Over Time"}\NormalTok{,}
+         \AttributeTok{x =} \StringTok{"Date"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Value"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{()}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-9-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 2. Air Visitors by Indicator Over Time}
+\CommentTok{\# Business Value: Track visitor trends by purpose or source to tailor marketing campaigns.}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(air\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(air\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{as.Date}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{"{-}01"}\NormalTok{)), }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ Indicator)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_area}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"2. Air Visitors by Indicator Over Time"}\NormalTok{,}
+         \AttributeTok{x =} \StringTok{"Date"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Visitors"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{()}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-9-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 3. Travel Method by Group Over Time}
+\CommentTok{\# Business Value: Identify preferred travel methods to optimize transportation partnerships or services.}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(travel\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(travel\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{as.Date}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{"{-}01"}\NormalTok{)), }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ Group)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_area}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"3. Travel Method by Group Over Time"}\NormalTok{,}
+         \AttributeTok{x =} \StringTok{"Date"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Value"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{()}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-9-3.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 4. Purpose of Trip by Indicator Over Time}
+\CommentTok{\# Business Value: Understand traveler motivations (e.g., leisure, business) to target promotions effectively.}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(purpose\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(purpose\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{as.Date}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{"{-}01"}\NormalTok{)), }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ Indicator)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_area}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"4. Purpose of Trip by Indicator Over Time"}\NormalTok{,}
+         \AttributeTok{x =} \StringTok{"Date"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Value"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{()}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-9-4.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 5. Tenant Sales by Tenant Name Over Time}
+\CommentTok{\# Business Value: Monitor tenant performance to inform lease renewals or retail strategy adjustments.}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(tenant\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(tenant\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{as.Date}\NormalTok{(Date), }\AttributeTok{y =} \StringTok{\textasciigrave{}}\AttributeTok{Net Sales}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{fill =} \StringTok{\textasciigrave{}}\AttributeTok{Tenant Name}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_area}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"5. Tenant Sales by Tenant Name Over Time"}\NormalTok{,}
+         \AttributeTok{x =} \StringTok{"Date"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Net Sales"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{()}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-9-5.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 6. Accommodation Choices by Indicator Over Time}
+\CommentTok{\# Business Value: Analyze specific accommodation metrics (e.g., bookings, revenue) to identify growth areas.}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(accom\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(accom\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{as.Date}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{"{-}01"}\NormalTok{)), }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ Indicator)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_area}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"6. Accommodation Choices by Indicator Over Time"}\NormalTok{,}
+         \AttributeTok{x =} \StringTok{"Date"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Value"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{()}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-9-6.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 7. Air Visitors by Group Over Time}
+\CommentTok{\# Business Value: Compare visitor demographics or regions to allocate advertising budgets efficiently.}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(air\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(air\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{as.Date}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{"{-}01"}\NormalTok{)), }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ Group)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_area}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"7. Air Visitors by Group Over Time"}\NormalTok{,}
+         \AttributeTok{x =} \StringTok{"Date"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Visitors"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{()}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-9-7.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 8. Travel Method by Indicator Over Time}
+\CommentTok{\# Business Value: Assess trends in travel methods (e.g., air, cruise) to negotiate better supplier contracts.}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(travel\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(travel\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{as.Date}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{YYYY{-}MM}\StringTok{\textasciigrave{}}\NormalTok{, }\StringTok{"{-}01"}\NormalTok{)), }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ Indicator)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_area}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"8. Travel Method by Indicator Over Time"}\NormalTok{,}
+         \AttributeTok{x =} \StringTok{"Date"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Value"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{theme\_minimal}\NormalTok{()}
+  
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-9-8.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 5. Ticket Sales Trend}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  ticket\_data}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(}\FunctionTok{paste}\NormalTok{(ticket\_data}\SpecialCharTok{$}\NormalTok{Year, ticket\_data}\SpecialCharTok{$}\NormalTok{Month, }\StringTok{"01"}\NormalTok{, }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{), }\AttributeTok{format =} \StringTok{"\%Y{-}\%B{-}\%d"}\NormalTok{)}
+  \FunctionTok{ggplot}\NormalTok{(ticket\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ date, }\AttributeTok{y =}\NormalTok{ TicketSell)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"5. Ticket Sales Trend"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 6. Tenant Sales Box Plot}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(tenant\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(tenant\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \StringTok{\textasciigrave{}}\AttributeTok{Tenant Name}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{y =} \StringTok{\textasciigrave{}}\AttributeTok{Net Sales}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{45}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"6. Tenant Sales Distribution"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 7. Accommodation vs Air Visitors Scatter}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(accom\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(air\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  combined }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(accom\_data, air\_data, }\AttributeTok{by =} \StringTok{"YYYY{-}MM"}\NormalTok{, }\AttributeTok{suffixes =} \FunctionTok{c}\NormalTok{(}\StringTok{"\_accom"}\NormalTok{, }\StringTok{"\_air"}\NormalTok{))}
+  \FunctionTok{ggplot}\NormalTok{(combined, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ value\_accom, }\AttributeTok{y =}\NormalTok{ value\_air, }\AttributeTok{color =}\NormalTok{ Group\_accom)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"7. Accommodation vs Air Visitors"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 8. Travel Method vs Purpose Heatmap}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(travel\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(purpose\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  combined\_tp }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(travel\_data, purpose\_data, }\AttributeTok{by =} \StringTok{"YYYY{-}MM"}\NormalTok{)}
+  \FunctionTok{ggplot}\NormalTok{(combined\_tp, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Indicator.x, }\AttributeTok{y =}\NormalTok{ Indicator.y, }\AttributeTok{fill =}\NormalTok{ value.x }\SpecialCharTok{*}\NormalTok{ value.y)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_tile}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"8. Travel Method vs Purpose Correlation"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 9. Ticket Sales vs Tenant Sales Scatter}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(tenant\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+\NormalTok{  tenant\_data}\SpecialCharTok{$}\NormalTok{date }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(tenant\_data}\SpecialCharTok{$}\NormalTok{Date)}
+\NormalTok{  ticket\_data}\SpecialCharTok{$}\NormalTok{month\_year }\OtherTok{\textless{}{-}} \FunctionTok{format}\NormalTok{(ticket\_data}\SpecialCharTok{$}\NormalTok{date, }\StringTok{"\%Y{-}\%m"}\NormalTok{)}
+\NormalTok{  tenant\_data}\SpecialCharTok{$}\NormalTok{month\_year }\OtherTok{\textless{}{-}} \FunctionTok{format}\NormalTok{(tenant\_data}\SpecialCharTok{$}\NormalTok{date, }\StringTok{"\%Y{-}\%m"}\NormalTok{)}
+\NormalTok{  combined\_ts }\OtherTok{\textless{}{-}} \FunctionTok{merge}\NormalTok{(tenant\_data, ticket\_data, }\AttributeTok{by =} \StringTok{"month\_year"}\NormalTok{)}
+  \FunctionTok{ggplot}\NormalTok{(combined\_ts, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ TicketSell, }\AttributeTok{y =} \StringTok{\textasciigrave{}}\AttributeTok{Net Sales}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{color =} \StringTok{\textasciigrave{}}\AttributeTok{Tenant Name}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"9. Ticket Sales vs Tenant Sales"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 10. Accommodation Units Bar Plot}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(accom\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(accom\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Units, }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ Group)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"10. Accommodation by Units"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-15-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 11. Air Visitors Histogram}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(air\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(air\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ value)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth =} \DecValTok{1000}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"11. Distribution of Air Visitors"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 12. Travel Method Box Plot}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(travel\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(travel\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Indicator, }\AttributeTok{y =}\NormalTok{ value)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"12. Travel Method Value Distribution"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-17-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 13. Purpose of Trip Violin Plot}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(purpose\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(purpose\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Indicator, }\AttributeTok{y =}\NormalTok{ value)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_violin}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"13. Purpose of Trip Distribution"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 14. Ticket Sales by Month Bar}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(ticket\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(ticket\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Month, }\AttributeTok{y =}\NormalTok{ TicketSell)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"14. Ticket Sales by Month"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 15. Tenant Sales Trend}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(tenant\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(tenant\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{as.Date}\NormalTok{(Date), }\AttributeTok{y =} \StringTok{\textasciigrave{}}\AttributeTok{Net Sales}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{color =} \StringTok{\textasciigrave{}}\AttributeTok{Tenant Name}\StringTok{\textasciigrave{}}\NormalTok{)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"15. Tenant Sales Trend Over Time"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 16. Accommodation by Indicator Stacked Bar}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(accom\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(accom\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Indicator, }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ Group)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"16. Accommodation by Indicator"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# 17. Air Visitors Density Plot}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(air\_data) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{ggplot}\NormalTok{(air\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ Group)) }\SpecialCharTok{+}
+    \FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+    \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"17. Air Visitors Density by Group"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{app_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Disconnect from database}
+\FunctionTok{dbDisconnect}\NormalTok{(con)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] TRUE
+\end{verbatim}
+
+\end{document}

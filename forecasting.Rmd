@@ -1,0 +1,678 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+```{r curve_plot}
+
+
+
+# install.packages("jmv", repos = "https://cran.r-project.org")
+# install.packages("jmvconnect", repos = "https://cran.r-project.org")
+
+# install.packages("RMySQL", repos = "https://cran.r-project.org")
+# install.packages("RMariaDB", repos = "https://cran.r-project.org")
+
+# install.packages("ggplot2", repos = "https://cran.r-project.org")
+# install.packages("dplyr", repos = "https://cran.r-project.org")
+# install.packages("tidyr", repos = "https://cran.r-project.org")
+# install.packages("lubridate", repos = "https://cran.r-project.org")
+# install.packages("ggpubr", repos = "https://cran.r-project.org")
+
+
+# install.packages("english", repos = "https://cran.r-project.org")
+
+
+
+
+
+
+
+
+library(grid)
+
+library(png)
+
+library(english)
+source("C:\\xampp\\htdocs\\TacticalDataDrivenDecisionSystem\\r_library\\ch2.r")
+source("C:\\xampp\\htdocs\\TacticalDataDrivenDecisionSystem\\r_library\\ch3.r")
+source("C:\\xampp\\htdocs\\TacticalDataDrivenDecisionSystem\\r_library\\ch4.r")
+
+image_path <- "./forecasting/"
+knitr::opts_chunk$set(fig.path = image_path)
+
+# Load required packages
+library(RMySQL)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(ggpubr)
+
+options(scipen = 999)
+
+
+# Database connection
+con <- dbConnect(MySQL(),
+                user = "pcc-sdr",         # Replace with your MySQL username
+                password = "6zu_.Ldx2.zCNb_8",         # Replace with your MySQL password
+                dbname = "pcc_forecast_db",
+                host = "127.0.0.1")
+
+# Convert all matrix text to float
+matrix_to_float <- function(mat) {
+  # Convert matrix to numeric vector and then back to matrix
+  numeric_data <- as.numeric(mat)
+  # Restore matrix dimensions
+  matrix(numeric_data, nrow = nrow(mat), ncol = ncol(mat), 
+         dimnames = dimnames(mat))
+}
+
+# Replace non-numeric values with NA or a default number (e.g., 0)
+matrix_to_float_safe <- function(mat) {
+  # Convert elements to numeric, suppress warnings
+  numeric_data <- suppressWarnings(as.numeric(mat))
+  # Restore matrix structure
+  matrix(numeric_data, nrow = nrow(mat), ncol = ncol(mat), 
+         dimnames = dimnames(mat))
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+
+ticket_func <- function(year_) {
+  
+  sql <- paste0("
+  SELECT
+    concat(
+      DATE_FORMAT(STR_TO_DATE(CONCAT(year,'-',month,'-01'), '%Y-%M-%d'), '%Y')+
+      DATE_FORMAT(STR_TO_DATE(CONCAT(year,'-',month,'-01'), '%Y-%M-%d'), '%m')/12-(1/24)
+    )
+    x
+    ,TicketSell y
+  FROM htaticketing 
+  WHERE 1=1
+    AND DATE_FORMAT(STR_TO_DATE(CONCAT(year,'-',month,'-01'), '%Y-%M-%d'), '%Y-%m') < DATE_FORMAT(NOW(), '%Y-%m')
+    AND (
+      year=",(year_),"
+    )
+  order by DATE_FORMAT(STR_TO_DATE(CONCAT(year,'-',month,'-01'), '%Y-%M-%d'), '%Y-%m') asc ")
+  
+  
+  
+  print(sql)
+  ticket_data <- dbGetQuery(con, sql)
+  ticket_data
+  A=matrix_data <- as.matrix(ticket_data)
+  A <- matrix_to_float_safe(A)
+  
+  
+  
+  x <- A[, 1] # First column for x values
+  y <- A[, 2] # Second column for y values
+  print(A)
+  print(x)
+  print(y)
+
+  
+  #M <- spline(A);M
+  #f <- function(year__) {
+  #  splinefunc(M,year__)
+  #}
+  
+  f = lagrange(A)
+  h = 0.0001
+  fp  <- function(year_) {
+    (((f(year_ + h) - f(year_))/h)*(1/12))
+  }
+  fpp  <- function(year_) {
+    (((fp(year_ + h) - fp(year_))/h)*(1/12))
+  }
+  
+  print(f)
+  
+  title_ = paste("Interpolation of ",year_)
+  image_path_ <- paste(image_path,title_,".png")
+  png(image_path_)
+  curve(
+    f,
+    from=year_+0.5,
+    to=year_+0.95,
+    col = "black",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    main = title_ 
+  )
+  
+  points(x, y, col = "red", pch = 19, cex = 1.5)  # Add the point in red
+  text(x, y, labels = x, pos = 1, cex = 0.7)
+  text(x, y, labels = y, pos = 3, cex = 0.7)
+
+  grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+  dev.off()
+  grid.raster(readPNG(image_path_))
+  
+  
+  
+  
+  
+  title_ = paste("First derivative of ",year_)
+  image_path_ <- paste(image_path,title_,".png")
+  png(image_path_)
+  curve(
+    fp,
+    from=year_+0.5,
+    to=year_+0.95,
+    col = "purple",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    main = title_,
+    add=FALSE
+  )
+  grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+  dev.off()
+  grid.raster(readPNG(image_path_))
+  
+  title_ = paste("Second Derivative of ",year_)
+  image_path_ <- paste(image_path,title_,".png")
+  png(image_path_)
+  curve(
+    fpp,
+    from=year_+0.5,
+    to=year_+0.95,
+    col = "purple",
+    
+    xlab = "X-axis", 
+    ylab = "Y-axis", 
+    
+    main = title_ ,
+    add=FALSE
+  )
+  grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+  dev.off()
+  grid.raster(readPNG(image_path_))
+  
+  return(c(f,fp,fpp))
+  
+}
+
+
+
+
+f_array <- list()
+fp_array <- list()
+fpp_array <- list()
+fpp_string_array <- list()
+
+for (i in 2010:2024) {
+  differentiate_list <- ticket_func(i)
+  
+  f <- differentiate_list[[1]]
+  fp <- differentiate_list[[2]]
+  fpp <- differentiate_list[[3]]
+  
+  print(paste("append i :",i,deparse(fpp)))
+  
+  f_array[[as.character(i)]] <- f
+  fp_array[[as.character(i)]] <- fp
+  fpp_array[[as.character(i)]] <- fpp
+  
+  fpp_string_array[[as.character(i)]] <- deparse(fpp)
+}
+print(paste("names(fpp_array):",names(fpp_array)))
+print(paste("length(fpp_array):",length(fpp_array)))
+print(paste(sapply(fpp_string_array, toString), collapse = ", "))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  Sys.sleep(2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+draw_average_annual_force <- function(ratio_to_year) {
+    # print(paste("ratio_to_year:",ratio_to_year))
+    # print(paste("names(fpp_array):",names(fpp_array)))
+
+  y_val = 0
+  for (year_n in names(fpp_array)) {
+    #print(paste("year_n:",year_n))
+    
+    # print(paste("fpp_array:", deparse(fpp_array[[year_n]]) ))
+    fpp_value <- fpp_array[[year_n]](as.numeric(year_n) + as.numeric(ratio_to_year))
+    y_val = y_val + fpp_value
+  }
+  y_val = y_val/length(fpp_array)
+  return(y_val)
+}
+
+draw_average_annual_force_curve = Vectorize(draw_average_annual_force);
+
+title_ = paste("Average Annual Second Derivative")
+  image_path_ <- paste(image_path,title_,".png")
+  png(image_path_)
+curve(
+  draw_average_annual_force_curve,
+  from=0.10,
+  to=1.1,
+  col = "purple",
+  
+  xlab = "X-axis", 
+  ylab = "Y-axis", 
+  
+  main = title_ ,
+  add=FALSE
+)
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+  dev.off()
+  grid.raster(readPNG(image_path_))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+draw_average_annual_speed <- function(ratio_to_year) {
+  # print(paste("ratio_to_year:",ratio_to_year))
+  # print(paste("names(fp_array):",names(fp_array)))
+  
+  y_val = 0
+  for (year_n in names(fp_array)) {
+    # print(paste("year_n:",year_n))
+    fp_value <- fp_array[[year_n]](as.numeric(year_n) + as.numeric(ratio_to_year))
+    # print(paste("fp_value:",fp_value))
+    y_val = y_val + fp_value
+  }
+  y_val = y_val/length(fp_array)
+  return(y_val)
+}
+
+draw_average_annual_speed_curve = Vectorize(draw_average_annual_speed);
+
+
+title_ = paste("Average Annual First Derivative")
+  image_path_ <- paste(image_path,title_,".png")
+  png(image_path_)
+curve(
+  draw_average_annual_speed_curve,
+  from=0.10,
+  to=1.1,
+  col = "purple",
+  
+  xlab = "X-axis", 
+  ylab = "Y-axis", 
+  
+  main = title_ ,
+  add=FALSE
+)
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+  dev.off()
+  grid.raster(readPNG(image_path_))
+
+
+
+
+
+
+
+
+
+
+
+
+draw_average_annual_equation <- function(ratio_to_year) {
+  # print(paste("ratio_to_year:",ratio_to_year))
+  # print(paste("names(f_array):",names(f_array)))
+
+  y_val = 0
+  for (year_n in names(f_array)) {
+    # print(paste("year_n:",year_n))
+    f_value <- f_array[[year_n]](as.numeric(year_n) + as.numeric(ratio_to_year))
+    # print(paste("f_value:",f_value))
+    y_val = y_val + f_value
+  }
+  y_val = y_val/length(f_array)
+  return(y_val)
+}
+
+draw_average_annual_equation_curve = Vectorize(draw_average_annual_equation);
+
+title_ = paste("Average Annual Interpolation")
+  image_path_ <- paste(image_path,title_,".png")
+  png(image_path_)
+
+curve(
+  draw_average_annual_equation_curve,
+  from=0.10,
+  to=1.1,
+  col = "purple",
+  
+  xlab = "X-axis", 
+  ylab = "Y-axis", 
+  
+  main = title_ ,
+  add=FALSE
+)
+grid(nx = NULL, ny = NULL, col = "gray", lty = "dotted")
+  dev.off()
+  grid.raster(readPNG(image_path_))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+get_all_differentiate_value <- function (x) {
+  year <- floor(x)
+  decimal_number <- x-year
+  values <- list()
+  # values[["f"]]   <- f_array[[as.character(year)]](decimal_number)
+  # values[["fp"]]  <- fp_array[[as.character(year)]](decimal_number)
+  # values[["fpp"]] <- fpp_array[[as.character(year)]](decimal_number)
+  
+  values[["f"]]   <- draw_average_annual_equation_curve(decimal_number)
+  values[["fp"]]  <- draw_average_annual_speed_curve(decimal_number)
+  values[["fpp"]] <- draw_average_annual_force_curve(decimal_number)
+  
+  
+  return(values)
+}
+
+
+
+
+
+
+
+  sql <- paste0("
+with `metadata_base1` as (
+    select 
+      DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 1 MONTH) `target_date`
+  ),
+`metadata` as (
+    select 
+      `target_date`
+      ,YEAR(`target_date`) `Y`
+      ,MONTH(`target_date`) `M`
+      ,MONTHNAME(`target_date`) `MonthName`
+    from  `metadata_base1`
+  )
+SELECT 
+  `target_date`,`Y`,`M`,
+  `metadata`.`Y`+(  (`metadata`.`M`)/12-(1/24)  ) x,
+    `TicketSell` y 
+    FROM `htaticketing`, `metadata`
+where 1=1
+    and `Year`=`metadata`.`Y`
+    and `Month`=`metadata`.`MonthName`
+ORDER BY `htaticketing`.`Year` DESC;
+")
+last_data <- dbGetQuery(con, sql)
+print(last_data)
+print(last_data$y)
+
+all_differentiate_value <- get_all_differentiate_value(last_data$x)
+print(all_differentiate_value)
+
+
+RichardsonExtrapolation_Annually_SpeedBased <- function (begin_x, begin_relative_x, begin_y, begin_speed) {
+  
+  h <- as.double(0.001)
+  
+  year <- begin_x - begin_relative_x
+  
+  start_value <- begin_y
+  start_speed <- begin_speed
+  
+  current_x <- begin_x
+  current_y <- begin_y
+  
+  X <- c(current_x+0)
+  Y <- c(current_y+0)
+  varian_list <- c(current_y+0)
+  
+  # Loop from 0 to 1 by 0.001 interval
+  for (i in seq( begin_relative_x , 1, by=h)) {
+    
+    #if (i>=0.935) {
+    #  i <- 0.935
+    #}
+    current_speed <- draw_average_annual_speed_curve(i)
+    current_speed <- as.double(current_speed)
+    
+    
+    current_x <- current_x+h
+    variation <- as.double(current_speed*h)
+    current_y <- current_y+variation
+    
+    
+    mean_value <- mean(varian_list)
+    sd_value <- sd(varian_list)
+    
+    mean_value <- as.double(mean_value)
+    sd_value <- as.double(sd_value)
+    
+    diviation_subtract <- (1/( 1+(((variation-mean_value)/mean_value)) ))
+    diviation_subtract <- as.double(diviation_subtract)
+    variation_changed <- as.double(variation*diviation_subtract)
+    
+    
+    # if ( variation > (mean_value+sd_value) ) {
+    #   variation <- variation_changed
+    #   print(" = =============== too high")
+    # }
+    
+    # Print results
+    #print(paste(
+    #  " current_speed: ", current_speed,
+    #  " h: ", h,
+    #  " variation: ", variation,
+    #  " variation: ", (current_speed*h),
+    #  " variation_changed: ", variation_changed,
+    #  " Mean: ", mean_value,
+    #  " Standard Deviation: ", sd_value
+    #  ))
+
+    
+    
+    #print(paste0(
+    #  " X: ",current_x,
+    #  " Y: ",current_y,
+      
+    #  " sd_value: ",sd_value,
+    #  " mean_value: ",mean_value,
+      
+    #  " Variation: ",variation,
+    #  " variation_changed: ", variation_changed,
+    #  
+    #  " Speed: ",current_speed, 
+    #  " Relative index: ",i,
+    #  " diviation_subtract: ",diviation_subtract
+    #))
+    X <- c(X,current_x+0)
+    Y <- c(Y,current_y+0)
+    varian_list <- c(varian_list,variation+0)
+  }
+
+  Sys.sleep(2)
+
+  title_ = paste("Forecasting in ",year)
+  image_path_ <- paste(image_path,title_,".png")
+  png(image_path_)
+  # Plotting the graph
+  plot(
+    X, Y, 
+    type="o", 
+    col="blue", 
+    xlab="X-axis", 
+    ylab="Y-axis", 
+    main=title_, 
+    axes=TRUE, 
+    xlim=c(begin_x, current_x)
+  )
+  
+  # Setting x-axis interval to 0.5
+  #axis(1, at=seq(0, 1, by=0.25))
+  #axis(2, at=seq(0, 999999, by=1))
+  dev.off()
+  grid.raster(readPNG(image_path_))
+  
+  
+  
+  # print(paste0(" X : ",X))
+  print(paste0(" begin_x : ",begin_x))
+  print(paste0(" year : ",year))
+  print(paste0(" Relative : ",begin_relative_x))
+}
+
+
+year <- floor(last_data$x)
+begin_relative_x_ <- last_data$x-year
+
+RichardsonExtrapolation_Annually_SpeedBased(last_data$x, begin_relative_x_, last_data$y, all_differentiate_value$fp)
+
+  print(paste0(" last_data$x : ",last_data$x," year : ",year))
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+```
+
+
+
+
+```{r}
+
+
+
+
+
+
+
+# Disconnect from database
+dbDisconnect(con)
+
+```
+

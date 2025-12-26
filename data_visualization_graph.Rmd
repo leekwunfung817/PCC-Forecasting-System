@@ -1,0 +1,561 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+```{r}
+library(english)
+source("C:\\xampp\\htdocs\\TacticalDataDrivenDecisionSystem\\r_library\\ch2.r")
+source("C:\\xampp\\htdocs\\TacticalDataDrivenDecisionSystem\\r_library\\ch3.r")
+source("C:\\xampp\\htdocs\\TacticalDataDrivenDecisionSystem\\r_library\\ch4.r")
+
+
+knitr::opts_chunk$set(fig.path = "./data_visualization/")
+
+
+
+# Load required packages
+library(RMySQL)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(ggpubr)
+
+
+# Database connection
+con <- dbConnect(MySQL(),
+                user = "pcc-sdr",         # Replace with your MySQL username
+                password = "6zu_.Ldx2.zCNb_8",         # Replace with your MySQL password
+                dbname = "pcc_forecast_db",
+                host = "127.0.0.1")
+
+# Fetch data from all tables
+accom_data <- dbGetQuery(con, "
+SELECT * FROM `htaaccommodationchoices`
+where 1=1
+	and `value` is not null
+  and `value`>0
+;
+")
+
+air_data <- dbGetQuery(con, "
+SELECT * FROM `htaallvisitorsbyair` 
+WHERE 1=1
+	and `value` is not null
+  and `value` > 0
+;")
+
+travel_data <- dbGetQuery(con, "SELECT * FROM htamethoodoftrave")
+
+purpose_data <- dbGetQuery(con, "
+SELECT * FROM `htapurposeoftrip` WHERE 1=1
+  and `value` is not null 
+  and `value`>0
+;
+")
+
+ticket_data <- dbGetQuery(con, " 
+SELECT * FROM htaticketing 
+WHERE 1=1
+  AND DATE_FORMAT(STR_TO_DATE(CONCAT(year,'-',month,'-01'), '%Y-%M-%d'), '%Y-%m') < DATE_FORMAT(NOW(), '%Y-%m')
+  AND TicketSell > 0
+  AND TicketSell IS NOT NULL
+;
+")
+ticket_data
+
+tenant_data <- dbGetQuery(con, "
+SELECT * FROM tenantsales
+where 1=1
+  and `Net Sales` >0
+  and `Net Sales` is not null
+;
+")
+
+# Prepare ticket_data with a month-year column
+if(nrow(ticket_data) > 0) {
+  ticket_data$date <- as.Date(paste(ticket_data$Year, ticket_data$Month, "01", sep = "-"), format = "%Y-%B-%d")
+  ticket_data$month_year <- format(ticket_data$date, "%Y-%m")
+  ticket_sum <- ticket_data %>% 
+    group_by(month_year) %>% 
+    summarise(total_tickets = sum(TicketSell, na.rm = TRUE))
+}
+
+# Function to calculate and plot correlation
+plot_correlation <- function(data1, data2, x_var, y_var, title, group_var = NULL) {
+  if(nrow(data1) > 0 && nrow(data2) > 0) {
+    # Merge data by month_year
+    merged_data <- merge(data1, data2, by = "month_year", all = FALSE)
+    
+    # Calculate correlation
+    cor_value <- cor(merged_data[[x_var]], merged_data[[y_var]], use = "complete.obs", method = "pearson")
+    cat(sprintf("%s - Pearson Correlation: %.3f\n", title, cor_value))
+    
+    # Create scatter plot
+    if(is.null(group_var)) {
+      p <- ggplot(merged_data, aes_string(x = x_var, y = y_var)) +
+        geom_point() +
+        geom_smooth(method = "lm", color = "blue") +
+        labs(title = title, x = "Ticket Sales", y = gsub("total_", "", y_var)) +
+        stat_cor(method = "pearson", label.x = min(merged_data[[x_var]], na.rm = TRUE), 
+                 label.y = max(merged_data[[y_var]], na.rm = TRUE)) +
+        theme_minimal()
+    } else {
+      p <- ggplot(merged_data, aes_string(x = x_var, y = y_var, color = group_var)) +
+        geom_point() +
+        geom_smooth(method = "lm") +
+        labs(title = title, x = "Ticket Sales", y = gsub("total_", "", y_var)) +
+        stat_cor(method = "pearson", aes_string(color = group_var), label.x = min(merged_data[[x_var]], na.rm = TRUE)) +
+        theme_minimal()
+    }
+    print(p)
+    Sys.sleep(1)
+    return(cor_value)
+  } else {
+    cat(sprintf("%s - Insufficient data for correlation\n", title))
+    return(NA)
+  }
+}
+
+
+# Function to plot correlation for a specific Indicator
+plot_correlation_by_indicator <- function(ticket_data, accom_data, indicator, plot_num) {
+  # Filter accommodation data for the specific Indicator
+  accom_subset <- accom_data %>% 
+    filter(Indicator == indicator) %>% 
+    group_by(month_year) %>% 
+    summarise(total_accom = sum(value, na.rm = TRUE))
+  
+  # Merge with ticket data
+  merged_data <- merge(ticket_data, accom_subset, by = "month_year", all = FALSE)
+  
+  if(nrow(merged_data) > 1) {  # Need at least 2 points for correlation
+    # Calculate correlation
+    cor_value <- cor(merged_data$total_tickets, merged_data$total_accom, use = "complete.obs", method = "pearson")
+    cat(sprintf("Plot %d - Ticket Sales vs %s - Pearson Correlation: %.3f\n", plot_num, indicator, cor_value))
+    
+    # Create scatter plot
+    p <- ggplot(merged_data, aes(x = total_tickets, y = total_accom)) +
+      geom_point() +
+      geom_smooth(method = "lm", color = "blue") +
+      labs(title = sprintf("Plot %d: Ticket Sales vs Accommodation (%s)", plot_num, indicator),
+           x = "Ticket Sales", y = paste("Accommodation Value (", indicator, ")")) +
+      stat_cor(method = "pearson", label.x = min(merged_data$total_tickets, na.rm = TRUE), 
+               label.y = max(merged_data$total_accom, na.rm = TRUE)) +
+      theme_minimal()
+    print(p)
+    Sys.sleep(1)
+    return(cor_value)
+  } else {
+    cat(sprintf("Plot %d - Ticket Sales vs %s - Insufficient data for correlation\n", plot_num, indicator))
+    return(NA)
+  }
+}
+
+
+```
+
+
+
+```{r}
+# 2. Visitors by Air Bar Plot
+if(nrow(air_data) > 0) {
+  ggplot(air_data, aes(x = Indicator, y = value, fill = Group)) +
+    geom_bar(stat = "identity", position = "dodge") +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    labs(title = "2. Visitors by Air by Indicator")
+}
+```
+
+```{r}
+# 3. Method of Travel Pie Chart
+if(nrow(travel_data) > 0) {
+  travel_sum <- travel_data %>% group_by(Indicator) %>% summarise(total = sum(value, na.rm = TRUE))
+  ggplot(travel_sum, aes(x = "", y = total, fill = Indicator)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = "3. Distribution of Travel Methods")
+}
+
+
+# 1. Accommodation Choices by Group
+if(nrow(accom_data) > 0) {
+  accom_sum <- accom_data %>% group_by(Group) %>% summarise(total = sum(value, na.rm = TRUE))
+  ggplot(accom_sum, aes(x = "", y = total, fill = Group)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = "1. Distribution of Accommodation Choices by Group")
+  
+}
+
+# 2. Accommodation Choices by Indicator
+if(nrow(accom_data) > 0) {
+  accom_sum <- accom_data %>% group_by(Indicator) %>% summarise(total = sum(value, na.rm = TRUE))
+  ggplot(accom_sum, aes(x = "", y = total, fill = Indicator)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = "2. Distribution of Accommodation Choices by Indicator")
+  
+}
+
+# 3. Accommodation Choices by Units
+if(nrow(accom_data) > 0) {
+  accom_sum <- accom_data %>% group_by(Units) %>% summarise(total = sum(value, na.rm = TRUE))
+  ggplot(accom_sum, aes(x = "", y = total, fill = Units)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = "3. Distribution of Accommodation Choices by Units")
+  
+}
+
+# 4. Air Visitors by Group
+if(nrow(air_data) > 0) {
+  air_sum <- air_data %>% group_by(Group) %>% summarise(total = sum(value, na.rm = TRUE))
+  ggplot(air_sum, aes(x = "", y = total, fill = Group)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = "4. Distribution of Air Visitors by Group")
+  
+}
+
+# 5. Air Visitors by Indicator
+if(nrow(air_data) > 0) {
+  air_sum <- air_data %>% group_by(Indicator) %>% summarise(total = sum(value, na.rm = TRUE))
+  ggplot(air_sum, aes(x = "", y = total, fill = Indicator)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = "5. Distribution of Air Visitors by Indicator")
+  
+}
+
+# 7. Travel Method by Group
+if(nrow(travel_data) > 0) {
+  travel_sum <- travel_data %>% group_by(Group) %>% summarise(total = sum(value, na.rm = TRUE))
+  ggplot(travel_sum, aes(x = "", y = total, fill = Group)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = "7. Distribution of Travel Methods by Group")
+  
+}
+
+# 8. Travel Method by Indicator
+if(nrow(travel_data) > 0) {
+  travel_sum <- travel_data %>% group_by(Indicator) %>% summarise(total = sum(value, na.rm = TRUE))
+  ggplot(travel_sum, aes(x = "", y = total, fill = Indicator)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = "8. Distribution of Travel Methods by Indicator")
+  
+}
+
+# 10. Purpose of Trip by Group
+if(nrow(purpose_data) > 0) {
+  purpose_sum <- purpose_data %>% group_by(Group) %>% summarise(total = sum(value, na.rm = TRUE))
+  ggplot(purpose_sum, aes(x = "", y = total, fill = Group)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = "10. Distribution of Purpose of Trip by Group")
+  
+}
+
+# 11. Purpose of Trip by Indicator
+if(nrow(purpose_data) > 0) {
+  purpose_sum <- purpose_data %>% group_by(Indicator) %>% summarise(total = sum(value, na.rm = TRUE))
+  ggplot(purpose_sum, aes(x = "", y = total, fill = Indicator)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = "11. Distribution of Purpose of Trip by Indicator")
+  
+}
+
+# 13. Ticket Sales by Year
+if(nrow(ticket_data) > 0) {
+  ticket_sum <- ticket_data %>% group_by(Year) %>% summarise(total = sum(TicketSell, na.rm = TRUE))
+  ggplot(ticket_sum, aes(x = "", y = total, fill = as.factor(Year))) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = "13. Distribution of Ticket Sales by Year")
+  
+}
+
+# 14. Ticket Sales by Month
+if(nrow(ticket_data) > 0) {
+  ticket_sum <- ticket_data %>% group_by(Month) %>% summarise(total = sum(TicketSell, na.rm = TRUE))
+  ggplot(ticket_sum, aes(x = "", y = total, fill = Month)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = "14. Distribution of Ticket Sales by Month")
+  
+}
+
+# 17. Air Visitors by Indicator (Latest Year)
+if(nrow(air_data) > 0) {
+  latest_year <- max(substr(air_data$`YYYY-MM`, 1, 4))
+  air_sum <- air_data %>% 
+    filter(substr(`YYYY-MM`, 1, 4) == latest_year) %>% 
+    group_by(Indicator) %>% 
+    summarise(total = sum(value, na.rm = TRUE))
+  ggplot(air_sum, aes(x = "", y = total, fill = Indicator)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = paste("17. Air Visitors by Indicator (", latest_year, ")"))
+  
+}
+
+# 19. Purpose of Trip by Indicator (Latest Year)
+if(nrow(purpose_data) > 0) {
+  latest_year <- max(substr(purpose_data$`YYYY-MM`, 1, 4))
+  purpose_sum <- purpose_data %>% 
+    filter(substr(`YYYY-MM`, 1, 4) == latest_year) %>% 
+    group_by(Indicator) %>% 
+    summarise(total = sum(value, na.rm = TRUE))
+  ggplot(purpose_sum, aes(x = "", y = total, fill = Indicator)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = paste("19. Purpose of Trip by Indicator (", latest_year, ")"))
+  
+}
+
+# 20. Tenant Sales by Year
+if(nrow(tenant_data) > 0) {
+  tenant_sum <- tenant_data %>% 
+    mutate(Year = substr(Date, 1, 4)) %>% 
+    group_by(Year) %>% 
+    summarise(total = sum(`Net Sales`, na.rm = TRUE))
+  ggplot(tenant_sum, aes(x = "", y = total, fill = Year)) +
+    geom_bar(stat = "identity") +
+    coord_polar("y") +
+    labs(title = "20. Distribution of Tenant Sales by Year")
+  
+}
+```
+
+```{r}
+# 1. Accommodation Choices by Group Over Time
+# Business Value: Understand which accommodation types drive demand to optimize inventory or partnerships.
+if(nrow(accom_data) > 0) {
+  ggplot(accom_data, aes(x = as.Date(paste0(`YYYY-MM`, "-01")), y = value, fill = Group)) +
+    geom_area() +
+    labs(title = "1. Accommodation Choices by Group Over Time",
+         x = "Date", y = "Value") +
+    theme_minimal()
+  
+}
+
+# 2. Air Visitors by Indicator Over Time
+# Business Value: Track visitor trends by purpose or source to tailor marketing campaigns.
+if(nrow(air_data) > 0) {
+  ggplot(air_data, aes(x = as.Date(paste0(`YYYY-MM`, "-01")), y = value, fill = Indicator)) +
+    geom_area() +
+    labs(title = "2. Air Visitors by Indicator Over Time",
+         x = "Date", y = "Visitors") +
+    theme_minimal()
+  
+}
+
+# 3. Travel Method by Group Over Time
+# Business Value: Identify preferred travel methods to optimize transportation partnerships or services.
+if(nrow(travel_data) > 0) {
+  ggplot(travel_data, aes(x = as.Date(paste0(`YYYY-MM`, "-01")), y = value, fill = Group)) +
+    geom_area() +
+    labs(title = "3. Travel Method by Group Over Time",
+         x = "Date", y = "Value") +
+    theme_minimal()
+  
+}
+
+# 4. Purpose of Trip by Indicator Over Time
+# Business Value: Understand traveler motivations (e.g., leisure, business) to target promotions effectively.
+if(nrow(purpose_data) > 0) {
+  ggplot(purpose_data, aes(x = as.Date(paste0(`YYYY-MM`, "-01")), y = value, fill = Indicator)) +
+    geom_area() +
+    labs(title = "4. Purpose of Trip by Indicator Over Time",
+         x = "Date", y = "Value") +
+    theme_minimal()
+  
+}
+
+# 5. Tenant Sales by Tenant Name Over Time
+# Business Value: Monitor tenant performance to inform lease renewals or retail strategy adjustments.
+if(nrow(tenant_data) > 0) {
+  ggplot(tenant_data, aes(x = as.Date(Date), y = `Net Sales`, fill = `Tenant Name`)) +
+    geom_area() +
+    labs(title = "5. Tenant Sales by Tenant Name Over Time",
+         x = "Date", y = "Net Sales") +
+    theme_minimal()
+  
+}
+
+# 6. Accommodation Choices by Indicator Over Time
+# Business Value: Analyze specific accommodation metrics (e.g., bookings, revenue) to identify growth areas.
+if(nrow(accom_data) > 0) {
+  ggplot(accom_data, aes(x = as.Date(paste0(`YYYY-MM`, "-01")), y = value, fill = Indicator)) +
+    geom_area() +
+    labs(title = "6. Accommodation Choices by Indicator Over Time",
+         x = "Date", y = "Value") +
+    theme_minimal()
+  
+}
+
+# 7. Air Visitors by Group Over Time
+# Business Value: Compare visitor demographics or regions to allocate advertising budgets efficiently.
+if(nrow(air_data) > 0) {
+  ggplot(air_data, aes(x = as.Date(paste0(`YYYY-MM`, "-01")), y = value, fill = Group)) +
+    geom_area() +
+    labs(title = "7. Air Visitors by Group Over Time",
+         x = "Date", y = "Visitors") +
+    theme_minimal()
+  
+}
+
+# 8. Travel Method by Indicator Over Time
+# Business Value: Assess trends in travel methods (e.g., air, cruise) to negotiate better supplier contracts.
+if(nrow(travel_data) > 0) {
+  ggplot(travel_data, aes(x = as.Date(paste0(`YYYY-MM`, "-01")), y = value, fill = Indicator)) +
+    geom_area() +
+    labs(title = "8. Travel Method by Indicator Over Time",
+         x = "Date", y = "Value") +
+    theme_minimal()
+  
+}
+
+```
+
+```{r}
+# 5. Ticket Sales Trend
+if(nrow(ticket_data) > 0) {
+  ticket_data$date <- as.Date(paste(ticket_data$Year, ticket_data$Month, "01", sep = "-"), format = "%Y-%B-%d")
+  ggplot(ticket_data, aes(x = date, y = TicketSell)) +
+    geom_line() +
+    labs(title = "5. Ticket Sales Trend")
+}
+```
+
+```{r}
+# 6. Tenant Sales Box Plot
+if(nrow(tenant_data) > 0) {
+  ggplot(tenant_data, aes(x = `Tenant Name`, y = `Net Sales`)) +
+    geom_boxplot() +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    labs(title = "6. Tenant Sales Distribution")
+}
+```
+
+```{r}
+# 7. Accommodation vs Air Visitors Scatter
+if(nrow(accom_data) > 0 && nrow(air_data) > 0) {
+  combined <- merge(accom_data, air_data, by = "YYYY-MM", suffixes = c("_accom", "_air"))
+  ggplot(combined, aes(x = value_accom, y = value_air, color = Group_accom)) +
+    geom_point() +
+    labs(title = "7. Accommodation vs Air Visitors")
+}
+```
+
+```{r}
+# 8. Travel Method vs Purpose Heatmap
+if(nrow(travel_data) > 0 && nrow(purpose_data) > 0) {
+  combined_tp <- merge(travel_data, purpose_data, by = "YYYY-MM")
+  ggplot(combined_tp, aes(x = Indicator.x, y = Indicator.y, fill = value.x * value.y)) +
+    geom_tile() +
+    labs(title = "8. Travel Method vs Purpose Correlation")
+}
+```
+
+```{r}
+# 9. Ticket Sales vs Tenant Sales Scatter
+if(nrow(tenant_data) > 0 && nrow(ticket_data) > 0) {
+  tenant_data$date <- as.Date(tenant_data$Date)
+  ticket_data$month_year <- format(ticket_data$date, "%Y-%m")
+  tenant_data$month_year <- format(tenant_data$date, "%Y-%m")
+  combined_ts <- merge(tenant_data, ticket_data, by = "month_year")
+  ggplot(combined_ts, aes(x = TicketSell, y = `Net Sales`, color = `Tenant Name`)) +
+    geom_point() +
+    labs(title = "9. Ticket Sales vs Tenant Sales")
+}
+```
+
+```{r}
+# 10. Accommodation Units Bar Plot
+if(nrow(accom_data) > 0) {
+  ggplot(accom_data, aes(x = Units, y = value, fill = Group)) +
+    geom_bar(stat = "identity") +
+    labs(title = "10. Accommodation by Units")
+}
+```
+
+```{r}
+# 11. Air Visitors Histogram
+if(nrow(air_data) > 0) {
+  ggplot(air_data, aes(x = value)) +
+    geom_histogram(binwidth = 1000) +
+    labs(title = "11. Distribution of Air Visitors")
+}
+```
+
+```{r}
+# 12. Travel Method Box Plot
+if(nrow(travel_data) > 0) {
+  ggplot(travel_data, aes(x = Indicator, y = value)) +
+    geom_boxplot() +
+    labs(title = "12. Travel Method Value Distribution")
+}
+```
+
+```{r}
+# 13. Purpose of Trip Violin Plot
+if(nrow(purpose_data) > 0) {
+  ggplot(purpose_data, aes(x = Indicator, y = value)) +
+    geom_violin() +
+    labs(title = "13. Purpose of Trip Distribution")
+}
+```
+
+```{r}
+# 14. Ticket Sales by Month Bar
+if(nrow(ticket_data) > 0) {
+  ggplot(ticket_data, aes(x = Month, y = TicketSell)) +
+    geom_bar(stat = "identity") +
+    labs(title = "14. Ticket Sales by Month")
+}
+```
+
+```{r}
+# 15. Tenant Sales Trend
+if(nrow(tenant_data) > 0) {
+  ggplot(tenant_data, aes(x = as.Date(Date), y = `Net Sales`, color = `Tenant Name`)) +
+    geom_line() +
+    labs(title = "15. Tenant Sales Trend Over Time")
+}
+```
+
+```{r}
+# 16. Accommodation by Indicator Stacked Bar
+if(nrow(accom_data) > 0) {
+  ggplot(accom_data, aes(x = Indicator, y = value, fill = Group)) +
+    geom_bar(stat = "identity") +
+    labs(title = "16. Accommodation by Indicator")
+}
+```
+
+```{r}
+# 17. Air Visitors Density Plot
+if(nrow(air_data) > 0) {
+  ggplot(air_data, aes(x = value, fill = Group)) +
+    geom_density(alpha = 0.5) +
+    labs(title = "17. Air Visitors Density by Group")
+}
+```
+
+```{r}
+# Disconnect from database
+dbDisconnect(con)
+
+```
+
+
+
+
+
